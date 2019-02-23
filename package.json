@@ -1,7 +1,7 @@
 {
-  "name": "project_name",
+  "name": "essence-platform",
   "version": "1.0.0",
-  "description": "project_name_page",
+  "description": "essence-platform page",
   "author": "lxk1080 <266427651@qq.com>",
   "private": true,
   "scripts": {

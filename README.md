@@ -1,6 +1,6 @@
-# project_name
+# essence-platform
 
-> project_name_page
+> essence-platform page
 
 ## Build Setup
 
