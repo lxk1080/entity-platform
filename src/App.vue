@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <header class="header">
-      header
+      <div class="logo">明日箐英系统管理</div>
     </header>
     <div class="main">
       <div class="sider">
@@ -35,6 +35,8 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  @import "common/stylus/variable.styl"
+
   .app
     display flex
     flex-direction column
@@ -44,7 +46,17 @@
     .header
       flex 0 0 60px
       height 60px
-      background #ccc
+      line-height 60px
+      background $header-background
+      border-bottom $white solid 1px
+      .logo
+        width 280px
+        text-align center
+        color $white
+        font-size 25px
+        font-weight 600
+        box-sizing content-box
+        border-right $white solid 1px
     .main
       flex 1
       display flex
@@ -56,7 +68,6 @@
           width 100% !important
       .content
         flex 1
-        border blue solid 1px
         padding 20px
 
     .ivu-menu-vertical
