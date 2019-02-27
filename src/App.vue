@@ -10,12 +10,14 @@
             <template slot="title">
               <Icon type="ios-paper" />{{menu.title}}
             </template>
-            <Menu-Item v-for="subMenu in menu.subMenus" :key="subMenu.key" :name="subMenu.key">{{subMenu.title}}</Menu-Item>
+            <Menu-Item v-for="subMenu in menu.subMenus" :key="subMenu.key" :name="subMenu.key" :to="subMenu.path">
+              {{subMenu.title}}
+            </Menu-Item>
           </Submenu>
         </Menu>
       </div>
       <div class="content">
-        content
+        <router-view />
       </div>
     </div>
   </div>
@@ -48,15 +50,13 @@
       height 60px
       line-height 60px
       background $header-background
-      border-bottom $white solid 1px
       .logo
         width 280px
         text-align center
         color $white
-        font-size 25px
+        font-size 22px
         font-weight 600
-        box-sizing content-box
-        border-right $white solid 1px
+        background $logo-background
     .main
       flex 1
       display flex
