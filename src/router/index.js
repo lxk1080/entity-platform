@@ -4,6 +4,7 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 const EnterpriseList = () => import('components/enterprise-list/enterprise-list');
+const EnterpriseDetail = () => import('components/enterprise-list/enterprise-detail');
 const RecruitmentList = () => import('components/recruitment-list/recruitment-list');
 const RecruitmentType = () => import('components/recruitment-type/recruitment-type');
 const UserDetails = () => import('components/user-details/user-details');
@@ -30,6 +31,10 @@ export default new Router({
     {
       path: '/enterprise-list',
       component: EnterpriseList,
+    },
+    {
+      path: '/enterprise-detail/:id',
+      component: EnterpriseDetail,
     },
     {
       path: '/recruitment-list',

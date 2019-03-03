@@ -41,5 +41,7 @@ module.exports = {
     'space-before-function-paren': 0,
     // 忽略：一行结束后面不能有空格
     'no-trailing-spaces': 0,
+    // 忽略：禁止使用特殊空白符
+    'no-irregular-whitespace': 0,
   }
-}
+};
