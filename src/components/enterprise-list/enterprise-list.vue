@@ -18,7 +18,7 @@
       <div class="opertions-left">
         <Button @click="handleSelectAll(true)">设置全选</Button>
         <Button @click="handleSelectAll(false)">取消全选</Button>
-        <Button @click="exportData">导出</Button>
+        <Button @click="exportData('data')">导出</Button>
         <Button @click="deleteSelected">删除</Button>
       </div>
       <div class="opertions-right">
@@ -35,8 +35,9 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { getEnterPriseList, deleteSingleData, deleteMulData } from 'api/enterpriseListApis';
-  import { ERR_OK } from 'common/js/config';
+  import EnterpriseListApis from 'api/enterpriseListApis';
+  import { ERR_OK } from 'api/common';
+  import { tableMixin } from 'common/js/mixins';
 
   const successColor = '#19be6b';
   const errorColor = '#ed4014';
@@ -119,7 +120,6 @@
     },
     {
       title: '操作',
-      key: 'opertion',
       width: 150,
       align: 'center',
       render: (h, params) => (
@@ -156,6 +156,8 @@
   ];
 
   export default {
+    mixins: [tableMixin],
+
     data() {
       return {
         tableHeight: -1,
@@ -163,11 +165,6 @@
         searchType: searchTypeList[0].value,
         searchValue: '',
         columns,
-        tableData: [],
-        selectedRowIds: [],
-        currentPage: 1,
-        pageSize: 10,
-        total: 0,
       };
     },
 
@@ -176,15 +173,10 @@
     },
 
     mounted() {
-      this.changeHeaderFirstText('选中');
       this.getData();
     },
 
     methods: {
-      changeHeaderFirstText(text) {
-        document.querySelector('.ivu-table-wrapper .ivu-table-cell-with-selection').innerHTML = text;
-      },
-
       setTableHeight() {
         const currentHeight = this.$refs.table.$el.offsetHeight;
 
@@ -204,7 +196,7 @@
           searchType: this.searchType,
         };
 
-        getEnterPriseList(data).then(res => {
+        EnterpriseListApis.getEnterPriseList(data).then(res => {
           if (res.code !== ERR_OK) {
             this.$Message.error(res.message);
             return;
@@ -220,46 +212,20 @@
         });
       },
 
-      onSelectionChange(selection) {
-        this.selectedRowIds = selection.reduce((prev, cur) => [...prev, cur.enterpriseId], []);
-      },
-
-      handleSelectAll(status) {
-        this.$refs.table.selectAll(status);
-      },
-
       search() {
         this.currentPage = 1;
         this.getData();
       },
 
-      exportData() {
-        this.$refs.table.exportCsv({
-          filename: 'data',
-        });
-      },
-
       deleteSingle(enterpriseId) {
-        deleteSingleData(enterpriseId).then(res => {
-          if (res.code === ERR_OK) {
-            this.$Message.success(res.message);
-            this.getData();
-          }
-        });
+        EnterpriseListApis.deleteSingleData({ enterpriseId }).then(this.successCallback);
       },
 
       deleteSelected() {
-        deleteMulData(this.selectedRowIds).then(res => {
-          if (res.code === ERR_OK) {
-            this.$Message.success(res.message);
-            this.getData();
-          }
-        });
-      },
+        const data = new URLSearchParams();
+        this.selectedRowIds.map(id => data.append('ids', id));
 
-      onPageChange(page) {
-        this.currentPage = page;
-        this.getData();
+        EnterpriseListApis.deleteMulData(data).then(this.successCallback);
       },
 
       entryDetail(enterpriseId) {

@@ -73,8 +73,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { getDetailData, updateUsernameOfDetail } from 'api/enterpriseListApis';
-  import { ERR_OK } from 'common/js/config';
+  import EnterpriseListApis from 'api/enterpriseListApis';
+  import { ERR_OK } from 'api/common';
 
   export default {
     data() {
@@ -91,8 +91,8 @@
     },
 
     methods: {
-      getData(id) {
-        getDetailData(id).then(res => {
+      getData(enterpriseId) {
+        EnterpriseListApis.getDetailData({ enterpriseId }).then(res => {
           if (res.code === ERR_OK) {
             this.data = res.result;
           }
@@ -110,7 +110,8 @@
             enterpriseId: this.data.enterpriseId,
             username: this.data.username,
           };
-          updateUsernameOfDetail(data).then(res => {
+
+          EnterpriseListApis.updateUsernameOfDetail(data).then(res => {
             if (res.code !== ERR_OK) {
               this.$Message.error(res.message);
               return;
@@ -121,7 +122,7 @@
       },
 
       onReview(activated) {
-        updateUsernameOfDetail({
+        EnterpriseListApis.updateUsernameOfDetail({
           enterpriseId: this.data.enterpriseId,
           activated,
         }).then(res => {
