@@ -5,7 +5,7 @@ const EnterpriseListApis = {
    * 获取企业列表
    * @param data => pageNum, pageSize, keyWords, searchType
    */
-  getEnterPriseList: data => post('/enterprise/getEnterpriseList.do', '', data),
+  getList: data => post('/enterprise/getEnterpriseList.do', '', data),
 
   /**
    * 删除单条数据
@@ -15,9 +15,10 @@ const EnterpriseListApis = {
 
   /**
    * 删除多条数据
-   * @param data => type: URLSearchParams => ids
+   * @param data => type: array or object
+   * @param sameKey => when data is array => id
    */
-  deleteMulData: data => postStream('/enterprise/deleteEnterpriseBatch.do', '', data),
+  deleteMulData: (data, sameKey) => postStream('/enterprise/deleteEnterpriseBatch.do', '', data, sameKey),
 
   /**
    * 获取详情页数据

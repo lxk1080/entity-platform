@@ -25,9 +25,9 @@ const menus = [
     key: '2',
     subMenus: [
       {
-        title: '用户详情',
+        title: '用户列表',
         key: '2-1',
-        path: '/user-details',
+        path: '/user-list',
       },
     ],
   },

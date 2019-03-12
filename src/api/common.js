@@ -51,7 +51,7 @@ const getHeaders = function(contentType = 'application/json', cacheControl = 'no
 
 const axiosInstance = axios.create({
   baseURL: url,
-  timeout: 1000,
+  timeout: 5000,
   headers: getHeaders('application/x-www-form-urlencoded'),
 });
 
@@ -63,6 +63,13 @@ export const post = function(url, qs, data = {}) {
   return axiosInstance.post(url, Qs.stringify(data), { params: qs }).then(callback);
 };
 
-export const postStream = function(url, qs, data = {}) {
-  return axiosInstance.post(composeUrl(url, qs), data).then(callback);
+export const postStream = function(url, qs, data = {}, sameKey) {
+  const stream = new URLSearchParams();
+  const isArr = Array.isArray(data);
+
+  for (let [key, value] of Object.entries(data)) {
+    stream.append(isArr ? sameKey : key, value);
+  }
+
+  return axiosInstance.post(composeUrl(url, qs), stream).then(callback);
 };

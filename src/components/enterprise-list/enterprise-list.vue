@@ -196,7 +196,7 @@
           searchType: this.searchType,
         };
 
-        EnterpriseListApis.getEnterPriseList(data).then(res => {
+        EnterpriseListApis.getList(data).then(res => {
           if (res.code !== ERR_OK) {
             this.$Message.error(res.message);
             return;
@@ -222,10 +222,7 @@
       },
 
       deleteSelected() {
-        const data = new URLSearchParams();
-        this.selectedRowIds.map(id => data.append('ids', id));
-
-        EnterpriseListApis.deleteMulData(data).then(this.successCallback);
+        EnterpriseListApis.deleteMulData(this.selectedRowIds, 'id').then(this.successCallback);
       },
 
       entryDetail(enterpriseId) {
