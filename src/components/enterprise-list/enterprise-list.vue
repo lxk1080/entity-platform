@@ -3,9 +3,9 @@
     <div class="header">
       <div class="header-left">
         <Select v-model="searchType" style="width: 100px">
-          <Option v-for="(item, i) in searchTypeList" :value="item.value" :key="i">{{ item.label }}</Option>
+          <Option v-for="(item, i) in searchTypeList" :value="item.id" :key="i">{{ item.name }}</Option>
         </Select>
-        <Input v-model="searchValue" placeholder="Enter something..." style="width: 200px" />
+        <Input v-model="keyWords" placeholder="Enter something..." style="width: 200px" />
       </div>
       <div class="header-right">
         <Button type="primary" @click="search">立即检索</Button>
@@ -23,7 +23,7 @@
       </div>
       <div class="opertions-right">
         <Page
-          :current="currentPage"
+          :current="pageNum"
           :total="total"
           :page-size="pageSize"
           @on-change="onPageChange"
@@ -36,48 +36,23 @@
 
 <script type="text/ecmascript-6">
   import EnterpriseListApis from 'api/enterpriseListApis';
-  import { ERR_OK } from 'api/common';
   import { tableMixin } from 'common/js/mixins';
-
-  const successColor = '#19be6b';
-  const errorColor = '#ed4014';
-  const warnColor = '#ff9900';
+  import { colors } from 'common/js/constants';
 
   // 用来获取vue实例供外部使用
   let self = null;
 
-  const activatedMap = {
-    1: {
-      text: '已通过',
-      color: successColor,
-    },
-    2: {
-      text: '未通过',
-      color: errorColor,
-    },
-    3: {
-      text: '待审核',
-      color: warnColor,
-    },
-  };
+  const activatedList = [
+    { id: 1, name: '已通过', color: colors.success },
+    { id: 2, name: '未通过', color: colors.error },
+    { id: 3, name: '待审核', color: colors.warn },
+  ];
 
   const searchTypeList = [
-    {
-      value: 1,
-      label: '账户名',
-    },
-    {
-      value: 2,
-      label: '姓名',
-    },
-    {
-      value: 3,
-      label: '公司名称',
-    },
-    {
-      value: 4,
-      label: '套餐',
-    },
+    { id: 1, name: '账户名' },
+    { id: 2, name: '姓名' },
+    { id: 3, name: '公司名称' },
+    { id: 4, name: '套餐' },
   ];
 
   const columns = [
@@ -109,14 +84,7 @@
     {
       title: '审核状态',
       key: 'activated',
-      render: (h, params) => {
-        const { text, color } = activatedMap[params.row.activated];
-        return h('span', {
-          style: {
-            color,
-          },
-        }, text);
-      },
+      render: (h, params) => self.renderText(h, params, activatedList, 'activated'),
     },
     {
       title: '操作',
@@ -134,7 +102,7 @@
             },
             on: {
               click() {
-                self.deleteSingle(params.row.enterpriseId);
+                self.deleteSingle(params.row[self.idName]);
               },
             },
           }, '删除'),
@@ -146,7 +114,7 @@
             },
             on: {
               click() {
-                self.entryDetail(params.row.enterpriseId);
+                self.entryDetail(params.row[self.idName]);
               },
             },
           }, '详情'),
@@ -160,10 +128,10 @@
 
     data() {
       return {
-        tableHeight: -1,
+        apis: EnterpriseListApis,
+        idName: 'enterpriseId',
         searchTypeList,
-        searchType: searchTypeList[0].value,
-        searchValue: '',
+        searchType: searchTypeList[0].id,
         columns,
       };
     },
@@ -177,52 +145,14 @@
     },
 
     methods: {
-      setTableHeight() {
-        const currentHeight = this.$refs.table.$el.offsetHeight;
-
-        const otherHeight = 60 + 20 + 32 + 20 + 20 + 32 + 20 + 20;
-        const maxHeight = document.documentElement.clientHeight - otherHeight;
-
-        if (currentHeight > maxHeight) {
-          this.tableHeight = maxHeight;
-        }
-      },
-
       getData() {
-        const data = {
-          pageSize: this.pageSize,
-          pageNum: this.currentPage,
-          keyWords: this.searchValue,
-          searchType: this.searchType,
-        };
-
-        EnterpriseListApis.getList(data).then(res => {
-          if (res.code !== ERR_OK) {
-            this.$Message.error(res.message);
-            return;
-          }
-
-          this.tableData = res.result;
-          this.total = res.total;
-
-          this.$nextTick(function() {
-            // 固定表头
-            // this.setTableHeight();
-          });
-        });
+        const data = this.transformArgs(['pageSize', 'pageNum', 'keyWords', 'searchType']);
+        this.getDataByCommFunc(data);
       },
 
-      search() {
-        this.currentPage = 1;
-        this.getData();
-      },
-
-      deleteSingle(enterpriseId) {
-        EnterpriseListApis.deleteSingleData({ enterpriseId }).then(this.successCallback);
-      },
-
-      deleteSelected() {
-        EnterpriseListApis.deleteMulData(this.selectedRowIds, 'id').then(this.successCallback);
+      setTableHeight() {
+        const otherHeight = 60 + 20 + 32 + 20 + 20 + 32 + 20 + 20;
+        this.setTableHeightByCommFunc(otherHeight);
       },
 
       entryDetail(enterpriseId) {

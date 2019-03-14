@@ -1,4 +1,4 @@
-import { post } from './common';
+import { post, postStream } from './common';
 
 export const RecruitmentListApis = {
   /**
@@ -33,7 +33,7 @@ export const RecruitmentListApis = {
    * @param recruitStatus 招聘状态：1开始，2已暂停，3已结束
    * @param positionId    职位Id
    */
-  pause: data => post('/position/positionOperate.do', '', data),
+  toggleStatus: data => post('/position/positionOperate.do', '', data),
 
   /**
    * 获取详情
@@ -67,7 +67,7 @@ export const RecruitmentListApis = {
    * @param contactUser         （String 非空）联系人姓名
    * @param contactsMobile      （String 非空）联系人电话
    */
-  modifyPosition: data => ('/position/modifyPosition.do', '', data),
+  modifyPosition: data => post('/position/modifyPosition.do', '', data),
 };
 
 export default RecruitmentListApis;

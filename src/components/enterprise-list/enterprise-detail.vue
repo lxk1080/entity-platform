@@ -4,7 +4,7 @@
       <div class="info-title">基础信息</div>
       <div class="info-content">
         <div class="avatar-wrapper">
-          <Avatar class="avatar" size="large" src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
+          <Avatar class="avatar" size="large" :src="data.principalIcon || 'https://i.loli.net/2017/08/21/599a521472424.jpg'" />
         </div>
         <div class="message-wrapper">
           <div class="message-item">
