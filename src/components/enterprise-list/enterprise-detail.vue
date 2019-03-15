@@ -74,11 +74,16 @@
 
 <script type="text/ecmascript-6">
   import EnterpriseListApis from 'api/enterpriseListApis';
+  import { detailMixin } from 'common/js/mixins';
   import { ERR_OK } from 'api/common';
 
   export default {
+    mixins: [detailMixin],
+
     data() {
       return {
+        apis: EnterpriseListApis,
+        idName: 'enterpriseId',
         usernameEdit: false,
         data: {
           username: '',
@@ -86,19 +91,7 @@
       };
     },
 
-    mounted() {
-      this.getData(this.$route.params.id);
-    },
-
     methods: {
-      getData(enterpriseId) {
-        EnterpriseListApis.getDetailData({ enterpriseId }).then(res => {
-          if (res.code === ERR_OK) {
-            this.data = res.result;
-          }
-        });
-      },
-
       onUsernameEdit() {
         if (!this.usernameEdit) {
           this.usernameEdit = true;
@@ -111,7 +104,7 @@
             username: this.data.username,
           };
 
-          EnterpriseListApis.updateUsernameOfDetail(data).then(res => {
+          this.apis.updateUsernameOfDetail(data).then(res => {
             if (res.code !== ERR_OK) {
               this.$Message.error(res.message);
               return;
@@ -122,7 +115,7 @@
       },
 
       onReview(activated) {
-        EnterpriseListApis.updateUsernameOfDetail({
+        this.apis.updateUsernameOfDetail({
           enterpriseId: this.data.enterpriseId,
           activated,
         }).then(res => {

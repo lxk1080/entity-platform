@@ -14,23 +14,15 @@
     <div class="table-list">
       <Table border ref="table" :height="tableHeight" :columns="columns" :data="tableData" @on-selection-change="onSelectionChange" />
     </div>
-    <div class="opertions">
-      <div class="opertions-left">
-        <Button @click="handleSelectAll(true)">设置全选</Button>
-        <Button @click="handleSelectAll(false)">取消全选</Button>
-        <Button @click="exportData('data')">导出</Button>
-        <Button @click="deleteSelected">删除</Button>
-      </div>
-      <div class="opertions-right">
-        <Page
-          :current="pageNum"
-          :total="total"
-          :page-size="pageSize"
-          @on-change="onPageChange"
-          show-total
-        />
-      </div>
-    </div>
+    <v-opertions
+      :pageNum="pageNum"
+      :pageSize="pageSize"
+      :total="total"
+      @handleSelectAll="handleSelectAll"
+      @exportData="exportData"
+      @deleteSelected="deleteSelected"
+      @onPageChange="onPageChange"
+    />
   </div>
 </template>
 
@@ -140,19 +132,10 @@
       self = this;
     },
 
-    mounted() {
-      this.getData();
-    },
-
     methods: {
       getData() {
         const data = this.transformArgs(['pageSize', 'pageNum', 'keyWords', 'searchType']);
         this.getDataByCommFunc(data);
-      },
-
-      setTableHeight() {
-        const otherHeight = 60 + 20 + 32 + 20 + 20 + 32 + 20 + 20;
-        this.setTableHeightByCommFunc(otherHeight);
       },
 
       entryDetail(enterpriseId) {
@@ -170,9 +153,4 @@
       justify-content space-between
     .table-list
       margin-top 20px
-    .opertions
-      display flex
-      justify-content space-between
-      margin-top 20px
-      margin-bottom 20px
 </style>

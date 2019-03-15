@@ -1,13 +1,16 @@
-// import { mapGetters, mapMutations, mapActions } from 'vuex'
+// import { mapGetters, mapMutations, mapActions } from 'vuex';
+import Opertions from 'base/opertions/opertions';
 import { ERR_OK } from 'api/common';
+
+const theadHeight = 40;
 
 export const tableMixin = {
   data() {
     return {
-      tableHeight: -1,
+      tableHeight: 0,
       selectedRowIds: [],
       pageNum: 1,
-      pageSize: 10,
+      pageSize: 20,
       keyWords: '',
       total: 0,
       tableData: [],
@@ -16,6 +19,7 @@ export const tableMixin = {
 
   mounted() {
     this.changeHeaderFirstText('选中');
+    this.getData();
   },
 
   methods: {
@@ -30,19 +34,27 @@ export const tableMixin = {
         this.total = res.total;
 
         this.$nextTick(function() {
-          // 固定表头
-          // this.setTableHeight();
+          // 固定表头，如果otherHeight不同，需要在引用组件中重写该函数
+          this.setTableHeight();
         });
       });
     },
 
+    setTableHeight() {
+      const otherHeight = 60 + 20 + 32 + 20 + 20 + 32 + 20 + 25;
+      this.setTableHeightByCommFunc(otherHeight);
+    },
+
     setTableHeightByCommFunc(otherHeight) {
-      const currentHeight = this.$refs.table.$el.offsetHeight;
+      const currentHeight = this.$refs.table.$el.getElementsByTagName('tbody')[0].offsetHeight + theadHeight;
       const maxHeight = document.documentElement.clientHeight - otherHeight;
 
       if (currentHeight > maxHeight) {
         this.tableHeight = maxHeight;
+        return;
       }
+
+      this.tableHeight = 0;
     },
 
     transformArgs(args) {
@@ -117,6 +129,26 @@ export const tableMixin = {
           color: item.color,
         },
       }, item.name);
+    },
+  },
+
+  components: {
+    'v-opertions': Opertions,
+  },
+};
+
+export const detailMixin = {
+  mounted() {
+    this.getData();
+  },
+
+  methods: {
+    getData() {
+      this.apis.getDetailData({ [this.idName]: this.$route.params.id }).then(res => {
+        if (res.code === ERR_OK) {
+          this.data = res.result;
+        }
+      });
     },
   },
 };

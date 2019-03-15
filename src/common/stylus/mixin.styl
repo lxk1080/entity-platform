@@ -1,3 +1,5 @@
+@import "./variable.styl"
+
 border-1px($color)
   position: relative
   &::after
@@ -17,3 +19,12 @@ bg-image($url)
   background-image url($url + "@2x.png")
   @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3)
     background-image url($url + "@3x.png")
+
+layout-absolut()
+  position: absolute
+  top 0
+  left 0
+  width 100%
+  min-height 100%
+  background $white
+  z-index 3

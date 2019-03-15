@@ -23,27 +23,20 @@
             {{ getOpertionBtnText(row.recruitStatus) }}
           </Button>
           <Button type="error" size="small" style="margin-right: 5px" @click="deleteSingle(row[idName])">删除</Button>
-          <Button type="warning" size="small" @click="entryDetail()">详情</Button>
+          <Button type="warning" size="small" @click="entryDetail(row[idName])">详情</Button>
         </template>
       </Table>
     </div>
-    <div class="opertions">
-      <div class="opertions-left">
-        <Button @click="handleSelectAll(true)">设置全选</Button>
-        <Button @click="handleSelectAll(false)">取消全选</Button>
-        <Button @click="exportData">导出</Button>
-        <Button @click="deleteSelected">删除</Button>
-      </div>
-      <div class="opertions-right">
-        <Page
-          :current="pageNum"
-          :total="total"
-          :page-size="pageSize"
-          @on-change="onPageChange"
-          show-total
-        />
-      </div>
-    </div>
+    <v-opertions
+      :pageNum="pageNum"
+      :pageSize="pageSize"
+      :total="total"
+      @handleSelectAll="handleSelectAll"
+      @exportData="exportData"
+      @deleteSelected="deleteSelected"
+      @onPageChange="onPageChange"
+    />
+    <router-view />
   </div>
 </template>
 
@@ -122,7 +115,7 @@
     },
   ];
 
-  const vm = {
+  export default {
     mixins: [tableMixin],
 
     data: () => ({
@@ -140,15 +133,12 @@
         marginRight: '10px',
         visibility: status === 3 ? 'hidden' : 'visible',
       }),
+
       getOpertionBtnText: () => status => recruitStatusList.find(item => item.id === status).operationText,
     },
 
     created() {
       self = this;
-    },
-
-    mounted() {
-      this.getData();
     },
 
     methods: {
@@ -168,35 +158,25 @@
         this.getDataByCommFunc(data);
       },
 
-      search() {
-
-      },
-
       toggleStatus(row) {
         const { operationId } = recruitStatusList.find(item => item.id === row.recruitStatus);
         this.apis.toggleStatus({ recruitStatus: operationId, [this.idName]: row[this.idName] }).then(this.callback);
       },
 
-      entryDetail() {
-
+      entryDetail(positionId) {
+        this.$router.push(`/recruitment-detail/${positionId}`);
       },
     },
   };
-
-  export default vm;
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
   .recruitment-list
     width 100%
+    position relative
     .header
       display flex
       justify-content space-between
     .table-list
       margin-top 20px
-    .opertions
-      display flex
-      justify-content space-between
-      margin-top 20px
-      margin-bottom 20px
 </style>

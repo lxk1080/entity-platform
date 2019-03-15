@@ -6,6 +6,7 @@ Vue.use(Router);
 const EnterpriseList = () => import('components/enterprise-list/enterprise-list');
 const EnterpriseDetail = () => import('components/enterprise-list/enterprise-detail');
 const RecruitmentList = () => import('components/recruitment-list/recruitment-list');
+const RecruitmentDetail = () => import('components/recruitment-list/recruitment-detail');
 const RecruitmentType = () => import('components/recruitment-type/recruitment-type');
 const UserList = () => import('components/user-management/user-list');
 const NewsList = () => import('components/news-list/news-list');
@@ -39,6 +40,12 @@ export default new Router({
     {
       path: '/recruitment-list',
       component: RecruitmentList,
+      children: [
+        {
+          path: '/recruitment-detail/:id',
+          component: RecruitmentDetail,
+        },
+      ],
     },
     {
       path: '/recruitment-type',
