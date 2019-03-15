@@ -16,5 +16,5 @@
   @import "~common/stylus/mixin";
 
   .recruitment-detail
-    layout-absolut()
+    layout-absolute()
 </style>
