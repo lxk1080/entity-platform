@@ -10,7 +10,19 @@
         <Select v-model="searchType" style="width: 100px">
           <Option v-for="(item, i) in searchTypeList" :value="item.id" :key="i">{{ item.name }}</Option>
         </Select>
-        <Input v-model="keyWords" placeholder="Enter something..." style="width: 200px" />
+        <!--搜索框-->
+        <Input v-show="!speicalSearchTypes.includes(searchType)" v-model="keyWords" placeholder="Enter something..." style="width: 200px" />
+        <!--日期选择-->
+        <DatePicker
+          v-show="speicalSearchTypes.includes(searchType)"
+          :value="getDate(keyWords)"
+          type="daterange"
+          format="yyyy/MM/dd"
+          placement="bottom-start"
+          placeholder="选择日期..."
+          style="width: 200px"
+          @on-change="(format) => onDateRangeChange(format, 'keyWords')"
+        />
       </div>
       <div class="header-right">
         <Button type="primary" @click="search">立即检索</Button>
@@ -23,7 +35,7 @@
             {{ getOpertionBtnText(row.recruitStatus) }}
           </Button>
           <Button type="error" size="small" style="margin-right: 5px" @click="deleteSingle(row[idName])">删除</Button>
-          <Button type="warning" size="small" @click="entryDetail(row[idName])">详情</Button>
+          <Button type="warning" size="small" @click="entryDetail(row[idName], row.recruitType)">详情</Button>
         </template>
       </Table>
     </div>
@@ -42,32 +54,12 @@
 
 <script type="text/ecmascript-6">
   import RecruitmentListApis from 'api/recruitmentListApis';
-  import { tableMixin } from 'common/js/mixins';
+  import { tableMixin, formMixin } from 'common/js/mixins';
   import { formatDate } from 'common/js/utils';
-  import { colors } from 'common/js/constants';
+  import { recruitTypeList, recruitStatusList, searchTypeList } from './constants';
 
   // 用来获取vue实例供外部使用
   let self = null;
-
-  const recruitTypeList = [
-    { id: 1, name: '实习招聘', color: colors.info },
-    { id: 2, name: '兼职招聘', color: colors.success },
-  ];
-
-  const recruitStatusList = [
-    { id: 1, name: '招聘中', color: colors.success, operationText: '暂停', operationId: 2 },
-    { id: 2, name: '暂停中', color: colors.error, operationText: '开始', operationId: 1 },
-    { id: 3, name: '已结束', color: colors.info, operationText: '操作' },
-  ];
-
-  const searchTypeList = [
-    { id: 1, name: '发布人' },
-    { id: 2, name: '岗位标题' },
-    { id: 3, name: '岗位类型' },
-    { id: 4, name: '招聘周期' },
-    { id: 5, name: '发布时间' },
-    { id: 6, name: '状态' },
-  ];
 
   const columns = [
     {
@@ -105,7 +97,12 @@
     {
       title: '招聘周期',
       key: 'onTime',
-      render: (h, params) => h('span', formatDate(new Date(params.row.onTime), 'yyyy-MM-dd')),
+      render: (h, params) => {
+        if (!params.row.onTime) {
+          return h('span', '长期招聘');
+        }
+        return h('span', `至 ${formatDate(new Date(params.row.onTime), 'yyyy-MM-dd')}`);
+      },
     },
     {
       title: '操作',
@@ -116,15 +113,16 @@
   ];
 
   export default {
-    mixins: [tableMixin],
+    mixins: [tableMixin, formMixin],
 
     data: () => ({
       apis: RecruitmentListApis,
       idName: 'positionId',
-      recruitType: recruitTypeList[0].id,
       recruitTypeList,
-      searchType: searchTypeList[0].id,
+      recruitType: recruitTypeList[0].id,
       searchTypeList,
+      searchType: searchTypeList[0].id,
+      speicalSearchTypes: [4, 5],
       columns,
     }),
 
@@ -149,10 +147,6 @@
           'recruitType',
           'searchType',
           'keyWords',
-          'registerStartTime',
-          'registerEndTime',
-          'recruitStartTime',
-          'recruitEndTime',
         ]);
 
         this.getDataByCommFunc(data);
@@ -163,8 +157,26 @@
         this.apis.toggleStatus({ recruitStatus: operationId, [this.idName]: row[this.idName] }).then(this.callback);
       },
 
-      entryDetail(positionId) {
-        this.$router.push(`/recruitment-detail/${positionId}`);
+      entryDetail(positionId, type) {
+        this.$router.push(`/recruitment-detail/${positionId}?type=${type}`);
+      },
+    },
+
+    watch: {
+      recruitType() {
+        this.getData();
+      },
+
+      searchType(newValue, oldValue) {
+        if (!this.speicalSearchTypes) return;
+
+        if (!this.speicalSearchTypes.includes(newValue) && this.speicalSearchTypes.includes(oldValue)) {
+          this.keyWords = '';
+        }
+
+        if (this.speicalSearchTypes.includes(newValue) && !this.speicalSearchTypes.includes(oldValue)) {
+          this.keyWords = '';
+        }
       },
     },
   };

@@ -43,15 +43,27 @@
 
         menus.map(menu => {
           menu.subMenus.map(subMenu => {
+            let exist = false;
+
             if (subMenu.path === sessionStorage.currentPath) {
+              exist = true;
+            }
+
+            if (!exist && subMenu.children) {
+              subMenu.children.map(path => {
+                if (sessionStorage.currentPath.includes(path)) {
+                  exist = true;
+                }
+              });
+            }
+
+            if (exist) {
               this.activeName = subMenu.key;
               this.openName = [subMenu.key.split('-')[0]];
 
               this.$nextTick(() => {
                 this.$refs.menu.updateOpened();
               });
-
-              return null;
             }
           });
         });
@@ -61,6 +73,7 @@
     watch: {
       $route(to) {
         sessionStorage.currentPath = to.fullPath;
+
         // 刷新页面或网页后退前进时，使UI可以定位到正确的MenuItem上
         this.getActiveItem();
       },

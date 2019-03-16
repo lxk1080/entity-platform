@@ -7,11 +7,13 @@ const menus = [
         title: '企业列表',
         key: '1-1',
         path: '/enterprise-list',
+        children: ['/enterprise-detail'],
       },
       {
         title: '招聘列表',
         key: '1-2',
         path: '/recruitment-list',
+        children: ['/recruitment-detail'],
       },
       {
         title: '招聘类型',

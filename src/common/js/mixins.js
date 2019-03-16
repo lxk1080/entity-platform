@@ -10,7 +10,7 @@ export const tableMixin = {
       tableHeight: 0,
       selectedRowIds: [],
       pageNum: 1,
-      pageSize: 20,
+      pageSize: 10,
       keyWords: '',
       total: 0,
       tableData: [],
@@ -41,11 +41,13 @@ export const tableMixin = {
     },
 
     setTableHeight() {
-      const otherHeight = 60 + 20 + 32 + 20 + 20 + 32 + 20 + 25;
+      const otherHeight = 60 + 20 + 32 + 20 + 20 + 32 + 20 + 20;
       this.setTableHeightByCommFunc(otherHeight);
     },
 
     setTableHeightByCommFunc(otherHeight) {
+      if (!this.$refs.table) return;
+
       const currentHeight = this.$refs.table.$el.getElementsByTagName('tbody')[0].offsetHeight + theadHeight;
       const maxHeight = document.documentElement.clientHeight - otherHeight;
 
@@ -138,6 +140,12 @@ export const tableMixin = {
 };
 
 export const detailMixin = {
+  data() {
+    return {
+      data: {},
+    };
+  },
+
   mounted() {
     this.getData();
   },
@@ -147,8 +155,38 @@ export const detailMixin = {
       this.apis.getDetailData({ [this.idName]: this.$route.params.id }).then(res => {
         if (res.code === ERR_OK) {
           this.data = res.result;
+
+          Object.keys(this.data).forEach(key => {
+            if (this.data[key] === null || this.data[key] === void 0) {
+              this.data[key] = '';
+            }
+          });
         }
       });
+    },
+  },
+};
+
+export const formMixin = {
+  computed: {
+    getDate() {
+      return (dateString) => {
+        if (!dateString) return '';
+        return dateString.split('-').reduce((prev, cur) => [...prev, new Date(cur)], []);
+      };
+    },
+  },
+
+  methods: {
+    onDateRangeChange(formatDate, ...rest) {
+      const value = formatDate.join('-');
+      const len = rest.length;
+      if (len === 1) {
+        this[rest[0]] = value;
+      }
+      if (len === 2) {
+        this[rest[0]][rest[1]] = value;
+      }
     },
   },
 };
