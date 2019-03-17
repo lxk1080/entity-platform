@@ -1,6 +1,7 @@
 // import { mapGetters, mapMutations, mapActions } from 'vuex';
 import Opertions from 'base/opertions/opertions';
 import { ERR_OK } from 'api/common';
+import Qs from 'qs';
 
 const theadHeight = 40;
 
@@ -128,9 +129,19 @@ export const tableMixin = {
       if (!item) return null;
       return h('span', {
         style: {
-          color: item.color,
+          color: item.color || 'initial',
         },
       }, item.name);
+    },
+
+    entryDetail(type, id, query) {
+      let result = `/${type}-detail/${id}`;
+
+      if (query && typeof query === 'object') {
+        result = `${result}?${Qs.stringify(query)}`;
+      }
+
+      this.$router.push(result);
     },
 
     addData() {

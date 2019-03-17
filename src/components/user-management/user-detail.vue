@@ -1,5 +1,5 @@
 <template>
-  <div class="user-details">
+  <div class="user-detail">
     user-details
   </div>
 </template>
@@ -9,5 +9,8 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  @import "~common/stylus/mixin";
 
+  .user-detail
+    layout-absolute()
 </style>

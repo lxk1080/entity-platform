@@ -106,7 +106,7 @@
             },
             on: {
               click() {
-                self.entryDetail(params.row[self.idName]);
+                self.entryDetail('enterprise', params.row[self.idName]);
               },
             },
           }, '详情'),
@@ -136,10 +136,6 @@
       getData() {
         const data = this.transformArgs(['pageSize', 'pageNum', 'keyWords', 'searchType']);
         this.getDataByCommFunc(data);
-      },
-
-      entryDetail(enterpriseId) {
-        this.$router.push(`/enterprise-detail/${enterpriseId}`);
       },
     },
   };

@@ -35,7 +35,7 @@
             {{ getOpertionBtnText(row.recruitStatus) }}
           </Button>
           <Button type="error" size="small" style="margin-right: 5px" @click="deleteSingle(row[idName])">删除</Button>
-          <Button type="warning" size="small" @click="entryDetail(row[idName], row.recruitType)">详情</Button>
+          <Button type="warning" size="small" @click="entryDetail('recruitment', row[idName], { type: row.recruitType })">详情</Button>
         </template>
       </Table>
     </div>
@@ -155,10 +155,6 @@
       toggleStatus(row) {
         const { operationId } = recruitStatusList.find(item => item.id === row.recruitStatus);
         this.apis.toggleStatus({ recruitStatus: operationId, [this.idName]: row[this.idName] }).then(this.callback);
-      },
-
-      entryDetail(positionId, type) {
-        this.$router.push(`/recruitment-detail/${positionId}?type=${type}`);
       },
     },
 
