@@ -132,6 +132,14 @@ export const tableMixin = {
         },
       }, item.name);
     },
+
+    addData() {
+
+    },
+
+    updateData() {
+
+    },
   },
 
   components: {

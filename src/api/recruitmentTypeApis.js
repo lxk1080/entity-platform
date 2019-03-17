@@ -1,4 +1,4 @@
-import { post } from './common';
+import { post, postStream } from './common';
 
 export const RecruitmentTypeApis = {
   /**
@@ -28,7 +28,7 @@ export const RecruitmentTypeApis = {
    * @param sortIndex      排序
    * @param professionIcon 图标
    */
-  addData: data => ('/profession/addProfession.do', '', data),
+  addData: data => post('/profession/addProfession.do', '', data),
 
   /**
    * 编辑
