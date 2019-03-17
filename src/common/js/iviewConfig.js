@@ -23,6 +23,8 @@ import {
   AutoComplete,
   RadioGroup,
   Radio,
+  Cascader,
+  Switch,
 } from 'iview';
 
 import 'iview/dist/styles/iview.css';
@@ -49,6 +51,9 @@ Vue.component('Cols', Col);
 Vue.component('AutoComplete', AutoComplete);
 Vue.component('RadioGroup', RadioGroup);
 Vue.component('Radio', Radio);
+Vue.component('Cascader', Cascader);
+// 同样改名
+Vue.component('Switchs', Switch);
 
 // 由于使用的按需加载的方式，只能加载组件，导致很多初始化在iview入口中的操作并没有做，所以需要自己手动完成
 Vue.prototype.$IVIEW = {

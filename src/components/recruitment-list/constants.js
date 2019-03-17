@@ -69,3 +69,50 @@ export const workDateTypes = {
     children: [],
   },
 };
+
+export const workTimeTypes = {
+  noAssign: {
+    id: 1,
+    name: '无指定时间',
+    children: [],
+  },
+  assign: {
+    id: 2,
+    name: '指定时间',
+    children: [],
+  },
+};
+
+export const genders = [
+  { id: 1, name: '男' },
+  { id: 2, name: '女' },
+  { id: 3, name: '不限' },
+];
+
+export const educations = [
+  { id: 1, name: '高中及以上' },
+  { id: 2, name: '大专及以上' },
+  { id: 3, name: '本科及以上' },
+  { id: 4, name: '硕士及以上' },
+  { id: 5, name: '博士及以上' },
+  { id: 6, name: '不限' },
+];
+
+export const contactTypes = [
+  { id: 1, name: '微信' },
+  { id: 2, name: 'QQ' },
+  { id: 3, name: 'QQ群' },
+  { id: 4, name: '公众号' },
+  { id: 5, name: '无' },
+];
+
+export const terms = {
+  long: {
+    id: 1,
+    name: '长期招聘',
+  },
+  short: {
+    id: 2,
+    name: '短期招聘',
+  },
+};

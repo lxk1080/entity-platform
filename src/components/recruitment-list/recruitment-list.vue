@@ -14,10 +14,10 @@
         <Input v-show="!speicalSearchTypes.includes(searchType)" v-model="keyWords" placeholder="Enter something..." style="width: 200px" />
         <!--日期选择-->
         <DatePicker
-          v-show="speicalSearchTypes.includes(searchType)"
+          v-if="speicalSearchTypes.includes(searchType)"
           :value="getDate(keyWords)"
           type="daterange"
-          format="yyyy/MM/dd"
+          format="yyyy-MM-dd"
           placement="bottom-start"
           placeholder="选择日期..."
           style="width: 200px"

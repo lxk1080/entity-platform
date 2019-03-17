@@ -191,6 +191,10 @@ export const detailMixin = {
         }
       });
     },
+
+    onReturn() {
+      this.$router.back();
+    },
   },
 };
 
@@ -199,18 +203,41 @@ export const formMixin = {
     getDate() {
       return (dateString) => {
         if (!dateString) return '';
-        return dateString.split('-').reduce((prev, cur) => [...prev, new Date(cur)], []);
+
+        if (typeof dateString === 'number') {
+          return new Date(dateString);
+        }
+
+        const times = dateString.split(',');
+
+        if (times.length === 1) {
+          return new Date(...times);
+        }
+
+        return times.reduce((prev, cur) => [...prev, new Date(cur)], []);
       };
     },
   },
 
   methods: {
     onDateRangeChange(formatDate, ...rest) {
-      const value = formatDate.join('-');
+      let value = '';
       const len = rest.length;
+
+      console.log(formatDate);
+
+      if (typeof formatDate === 'string') {
+        value = new Date(formatDate).getTime();
+      }
+
+      if (Array.isArray(formatDate)) {
+        value = formatDate.join(',');
+      }
+
       if (len === 1) {
         this[rest[0]] = value;
       }
+
       if (len === 2) {
         this[rest[0]][rest[1]] = value;
       }

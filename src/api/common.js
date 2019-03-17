@@ -2,8 +2,8 @@ import axios from 'axios';
 import Qs from 'qs';
 import Cookie from 'js-cookie';
 
-export const url = 'http://ningbo.hanchengvip.com/essence-server';
-// export const url = 'http://192.168.1.104:8080/essence-server';
+// export const url = 'http://ningbo.hanchengvip.com/essence-server';
+export const url = 'http://192.168.1.103:8080/essence-server';
 
 export const ERR_OK = '0';
 
