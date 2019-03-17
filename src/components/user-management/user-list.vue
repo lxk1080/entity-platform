@@ -2,6 +2,7 @@
   <div class="user-list">
     <div class="header">
       <div class="header-left">
+        <span>选择筛选条件：</span>
         <Select v-model="searchType" style="width: 100px">
           <Option v-for="(item, i) in searchTypeList" :value="item.id" :key="i">{{ item.name }}</Option>
         </Select>
@@ -102,14 +103,8 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  @import "~common/stylus/mixin";
+
   .user-list
-    position relative
-    width 100%
-    height 100%
-    padding 20px
-    .header
-      display flex
-      justify-content space-between
-    .table-list
-      margin-top 20px
+    page-base()
 </style>

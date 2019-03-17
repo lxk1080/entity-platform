@@ -44,12 +44,6 @@
       align: 'center',
     },
     {
-      title: '排序',
-      key: 'sortIndex',
-      align: 'center',
-      slot: 'sort',
-    },
-    {
       title: '图标',
       key: 'professionIcon',
       align: 'center',
@@ -63,6 +57,12 @@
       title: '所属分类',
       key: 'recruitType',
       render: (h, params) => self.renderText(h, params, recruitTypeList, 'recruitType'),
+    },
+    {
+      title: '排序',
+      key: 'sortIndex',
+      align: 'center',
+      slot: 'sort',
     },
     {
       title: '操作',
@@ -102,14 +102,11 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  @import "~common/stylus/mixin";
+
   .recruitment-type
-    position relative
-    width 100%
-    height 100%
-    padding 20px
-    .table-list
-      margin-top 20px
-      .list-input
-        input
-          text-align center
+    page-base()
+    .list-input
+      input
+        text-align center
 </style>
