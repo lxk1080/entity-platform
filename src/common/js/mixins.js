@@ -1,7 +1,8 @@
 // import { mapGetters, mapMutations, mapActions } from 'vuex';
 import Opertions from 'base/opertions/opertions';
-import { ERR_OK } from 'api/common';
 import Qs from 'qs';
+import { ERR_OK } from 'api/common';
+import { formatDate } from 'common/js/utils';
 
 const theadHeight = 40;
 
@@ -42,7 +43,7 @@ export const tableMixin = {
     },
 
     setTableHeight() {
-      const otherHeight = 60 + 20 + 32 + 20 + 20 + 32 + 20 + 20;
+      const otherHeight = 60 + 20 + 32 + 20 + 20 + 32 + 20 + 25;
       this.setTableHeightByCommFunc(otherHeight);
     },
 
@@ -132,6 +133,13 @@ export const tableMixin = {
           color: item.color || 'initial',
         },
       }, item.name);
+    },
+
+    renderTime(h, params, field, defaultText = '') {
+      if (!params.row[field]) {
+        return h('span', defaultText);
+      }
+      return h('span', `至 ${formatDate(new Date(params.row[field]), 'yyyy-MM-dd')}`);
     },
 
     entryDetail(type, id, query) {

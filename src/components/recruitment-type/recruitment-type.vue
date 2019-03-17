@@ -5,11 +5,11 @@
     </div>
     <div class="table-list">
       <Table border ref="table" :columns="columns" :data="tableData" @on-selection-change="onSelectionChange">
-        <template slot-scope="{ row }" slot="sort">
-          <Input class="list-input" v-model="row.sortIndex" style="width: 50px" />
-        </template>
         <template slot-scope="{ row }" slot="icon">
           <Avatar class="avatar" size="large" :src="row.professionIcon || 'https://i.loli.net/2017/08/21/599a521472424.jpg'" />
+        </template>
+        <template slot-scope="{ row }" slot="sort">
+          <Input class="list-input" v-model="row.sortIndex" style="width: 50px" />
         </template>
         <template slot-scope="{ row }" slot="operation">
           <Button size="small" style="margin-right: 5px" @click="updateData">编辑</Button>

@@ -97,12 +97,7 @@
     {
       title: '招聘周期',
       key: 'onTime',
-      render: (h, params) => {
-        if (!params.row.onTime) {
-          return h('span', '长期招聘');
-        }
-        return h('span', `至 ${formatDate(new Date(params.row.onTime), 'yyyy-MM-dd')}`);
-      },
+      render: (h, params) => self.renderTime(h, params, 'onTime', '长期招聘'),
     },
     {
       title: '操作',

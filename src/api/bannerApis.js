@@ -5,7 +5,7 @@ const BannerApis = {
    * 获取banner列表
    * @param pageNum
    * @param pageSize
-   * @param bannerLocation	广告位置：1网站顶部海报，2小程序顶部广告，3小程序中部广告，4小程序底部广告
+   * @param bannerLocation 广告位置：1网站顶部海报，2小程序顶部广告，3小程序中部广告，4小程序底部广告
    */
   getList: data => post('/banner/getBannerList.do', '', data),
 
