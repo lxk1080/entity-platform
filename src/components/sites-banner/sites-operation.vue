@@ -1,5 +1,5 @@
 <template>
-  <div class="recruitment-operation">
+  <div class="sites-operation">
     <Card style="width: 100%" class="card">
       <p slot="title" class="card-title">
         <Icon type="ios-create" size="18" />
@@ -8,14 +8,14 @@
       <div class="card-content">
         <div class="content-row">
           <div class="row-item">
-            <span>类型名称：</span>
-            <Input v-model="data.professionName" placeholder="Enter something..." style="width: 200px" />
+            <span>海报名称：</span>
+            <Input v-model="data.bannerTitle" placeholder="Enter something..." style="width: 200px" />
           </div>
         </div>
         <div class="content-row">
           <div class="row-item">
-            <span>　　图标：</span>
-            <Avatar v-if="operstionType.id === operations.edit.id" class="avatar" size="large" :src="imgSrc" />
+            <span>上传图标：</span>
+            <Avatar v-if="operstionType.id === operations.edit.id" class="avatar" size="large" shape="square" :src="imgSrc" />
             <Upload
               :before-upload="onBeforeUpload"
               action=""
@@ -35,10 +35,8 @@
         </div>
         <div class="content-row">
           <div class="row-item">
-            <span>所属分类：</span>
-            <Select v-model="data.recruitType" style="width: 100px">
-              <Option v-for="(item, i) in recruitTypeList" :value="item.id" :key="i">{{ item.name }}</Option>
-            </Select>
+            <span>是否显示：</span>
+            <Switchs v-model="data.activated" :trueValue="1" :falseValue="2" />
           </div>
         </div>
       </div>
@@ -52,9 +50,9 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import RecruitmentTypeApis from 'api/recruitmentTypeApis';
+  import BannerApis from 'api/bannerApis';
   import { detailMixin } from 'common/js/mixins';
-  import { operations, recruitTypeList } from 'common/js/constants';
+  import { operations } from 'common/js/constants';
 
   export default {
     mixins: [detailMixin],
@@ -63,15 +61,15 @@
       return {
         operations,
         operstionType: operations.add,
-        apis: RecruitmentTypeApis,
-        idName: 'professionId',
-        recruitTypeList,
+        apis: BannerApis,
+        idName: 'bannerId',
         imgSrc: '',
         data: {
-          professionName: '',
-          professionIcon: '',
+          bannerLocation: 1,
+          bannerTitle: '',
+          imageUrl: '',
           sortIndex: '',
-          recruitType: '',
+          activated: 2,
         },
       };
     },
@@ -82,8 +80,8 @@
 
     computed: {
       getFileName() {
-        if (typeof this.data.professionIcon === 'object') {
-          return this.data.professionIcon.name;
+        if (typeof this.data.imageUrl === 'object') {
+          return this.data.imageUrl.name;
         }
 
         return '';
@@ -92,14 +90,14 @@
 
     methods: {
       onBeforeUpload(file) {
-        this.data.professionIcon = file;
+        this.data.imageUrl = file;
         return false;
       },
     },
 
     watch: {
       data(newValue) {
-        this.imgSrc = newValue.professionIcon;
+        this.imgSrc = newValue.imageUrl;
       },
     },
   };
@@ -108,7 +106,7 @@
 <style lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/mixin";
 
-  .recruitment-operation
+  .sites-operation
     layout-absolute()
     card-style()
 </style>

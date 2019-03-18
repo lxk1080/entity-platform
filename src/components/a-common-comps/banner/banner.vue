@@ -1,7 +1,7 @@
 <template>
   <div class="banner-container">
     <div class="header">
-      <Button @click="addData">{{ banner.addTitle }}</Button>
+      <Button @click="entryPage(banner.operationPath, 0, { type: operations.add.id })">{{ banner.addTitle }}</Button>
     </div>
     <div class="table-list">
       <Table border ref="table" :height="tableHeight" :columns="columns" :data="tableData" @on-selection-change="onSelectionChange">
@@ -12,7 +12,7 @@
           <Input class="list-input" v-model="row.sortIndex" style="width: 50px" />
         </template>
         <template slot-scope="{ row }" slot="operation">
-          <Button size="small" style="margin-right: 5px" @click="updateData">编辑</Button>
+          <Button size="small" style="margin-right: 5px" @click="entryPage(banner.operationPath, row[idName], { type: operations.edit.id })">编辑</Button>
           <Button type="error" size="small" @click="deleteSingle(row[idName])">删除</Button>
         </template>
       </Table>
@@ -34,6 +34,7 @@
   import BannerApis from 'api/bannerApis';
   import { formatDate } from 'common/js/utils';
   import { tableMixin } from 'common/js/mixins';
+  import { operations } from 'common/js/constants';
   import { banners } from './constants';
 
   let self = null;
@@ -48,7 +49,7 @@
         },
         {
           title: '海报名称',
-          key: 'professionIcon',
+          key: 'bannerTitle',
         },
         {
           title: '海报',
@@ -93,7 +94,7 @@
         },
         {
           title: '标题',
-          key: '',
+          key: 'bannerTitle',
         },
         {
           title: '广告类型',
@@ -139,6 +140,7 @@
         apis: BannerApis,
         idName: 'bannerId',
         banners,
+        operations,
         bannerLocation: this.banner.id,
         columns: getColumns(this.banner),
       };

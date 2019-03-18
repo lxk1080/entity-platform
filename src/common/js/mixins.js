@@ -2,7 +2,7 @@
 import Opertions from 'base/opertions/opertions';
 import Qs from 'qs';
 import { ERR_OK } from 'api/common';
-import { operations } from 'common/js/constants';
+import { operations, terms } from 'common/js/constants';
 import { formatDate } from 'common/js/utils';
 
 const theadHeight = 40;
@@ -137,7 +137,7 @@ export const tableMixin = {
     },
 
     renderTime(h, params, field, defaultText = '') {
-      if (!params.row[field]) {
+      if (!params.row[field] || params.row.isLongTerm === terms.long.id) {
         return h('span', defaultText);
       }
       return h('span', `至 ${formatDate(new Date(params.row[field]), 'yyyy-MM-dd')}`);
@@ -154,6 +154,12 @@ export const tableMixin = {
     },
   },
 
+  watch: {
+    $route(to) {
+      this.getData();
+    },
+  },
+
   components: {
     'v-opertions': Opertions,
   },
@@ -167,6 +173,7 @@ export const detailMixin = {
   },
 
   mounted() {
+    if (this.operstionType && this.operstionType.id === operations.add.id) return;
     this.getData();
   },
 
@@ -181,23 +188,11 @@ export const detailMixin = {
               this.data[key] = '';
             }
           });
-
-          // 如果是添加的操作，获取所有的字段后，都将值置为空
-          if (this.operstionType.id === operations.add.id) {
-            Object.keys(this.data).map(key => {
-              this.data[key] = '';
-            });
-          }
         }
       });
     },
 
-    onReturn(rePath) {
-      if (rePath) {
-        this.$router.push(rePath);
-        return;
-      }
-
+    onReturn() {
       this.$router.back();
     },
 

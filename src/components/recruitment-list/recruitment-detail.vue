@@ -179,7 +179,7 @@
         <div class="content-row">
           <div class="row-item">
             <span>短信通知：</span>
-            <Switchs :value="data.isNotice" :trueValue="1" falseValue="2" />
+            <Switchs v-model="data.isNotice" :trueValue="1" :falseValue="2" />
             <span style="margin-left: 20px">开启后，学生报名会向本岗位的联系人号码{{ data.contactsMobile }}发送提醒短信</span>
           </div>
         </div>
@@ -222,7 +222,7 @@
   import RecruitmentListApis from 'api/recruitmentListApis';
   import { detailMixin, formMixin } from 'common/js/mixins';
   import cities from 'common/js/cities';
-  import * as constants from './constants';
+  import * as constants from 'common/js/constants';
 
   export default {
     mixins: [detailMixin, formMixin],
@@ -288,22 +288,7 @@
 
   .recruitment-detail
     layout-absolute()
-    .card
-      margin-bottom 10px
-      .card-title
-        .title-text
-          font-size 18px
-          font-weight 600
-      .card-content
-        .content-row
-          display flex
-          margin-bottom 20px
-          .row-item
-            margin-right 30px
-            .textarea
-              vertical-align text-top
-            .ivu-cascader
-              display inline-block
+    card-style()
     .footer
       margin 30px 0 50px
       .btn-footer

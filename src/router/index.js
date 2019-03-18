@@ -12,10 +12,15 @@ const RecruitmentOperation = () => import('components/recruitment-type/recruitme
 const UserList = () => import('components/user-management/user-list');
 const UserDetail = () => import('components/user-management/user-detail');
 const NewsList = () => import('components/news-list/news-list');
+const NewsOperation = () => import('components/news-list/news-operation');
 const SitesBanner = () => import('components/sites-banner/sites-banner');
+const SitesOperation = () => import('components/sites-banner/sites-operation');
 const AppletsBanner = () => import('components/applets-banner/applets-banner');
+const AppletsOperation = () => import('components/applets-banner/applets-operation');
 const HomeMBanner = () => import('components/home-m-banner/home-m-banner');
+const HomeMOperation = () => import('components/home-m-banner/home-m-operation');
 const HomeBBanner = () => import('components/home-b-banner/home-b-banner');
+const HomeBOperation = () => import('components/home-b-banner/home-b-operation');
 const ActivityList = () => import('components/activity-list/activity-list');
 const OrderList = () => import('components/order-list/order-list');
 const PackageManagement = () => import('components/package-management/package-management');
@@ -72,22 +77,52 @@ export default new Router({
     {
       path: '/news-list',
       component: NewsList,
+      children: [
+        {
+          path: '/news-operation/:id',
+          component: NewsOperation,
+        },
+      ],
     },
     {
       path: '/sites-banner',
       component: SitesBanner,
+      children: [
+        {
+          path: '/sites-operation/:id',
+          component: SitesOperation,
+        },
+      ],
     },
     {
       path: '/applets-banner',
       component: AppletsBanner,
+      children: [
+        {
+          path: '/applets-operation/:id',
+          component: AppletsOperation,
+        },
+      ],
     },
     {
       path: '/home-m-banner',
       component: HomeMBanner,
+      children: [
+        {
+          path: '/home-m-operation/:id',
+          component: HomeMOperation,
+        },
+      ],
     },
     {
       path: '/home-b-banner',
       component: HomeBBanner,
+      children: [
+        {
+          path: '/home-b-operation/:id',
+          component: HomeBOperation,
+        },
+      ],
     },
     {
       path: '/activity-list',

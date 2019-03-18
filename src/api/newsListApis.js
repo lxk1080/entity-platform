@@ -44,7 +44,7 @@ const NewsListApis = {
    * @param newsContent   新闻内容
    * @param adminId       管理员Id
    */
-  update: data => post('/news/modifyNews.do', '', data),
+  updateData: data => post('/news/modifyNews.do', '', data),
 
   /**
    * 获取详情页数据

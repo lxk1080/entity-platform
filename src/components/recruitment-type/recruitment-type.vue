@@ -33,8 +33,7 @@
 <script type="text/ecmascript-6">
   import recruitmentTypeApis from 'api/recruitmentTypeApis';
   import { tableMixin } from 'common/js/mixins';
-  import { operations } from 'common/js/constants';
-  import { recruitTypeList } from 'components/recruitment-list/constants';
+  import { operations, recruitTypeList } from 'common/js/constants';
 
   let self = null;
 

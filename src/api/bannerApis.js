@@ -1,4 +1,4 @@
-import { post, postStream } from './common';
+import { post, postStream, postFile } from './common';
 
 const BannerApis = {
   /**
@@ -25,12 +25,12 @@ const BannerApis = {
   /**
    * 添加 banner
    */
-  addData: data => post('/banner/addBanner.do', '', data),
+  addData: data => postFile('/banner/addBanner.do', '', data),
 
   /**
    * 编辑 banner
    */
-  updateData: data => post('/banner/modifyBanner.do', '', data),
+  updateData: data => postFile('/banner/modifyBanner.do', '', data),
 
   /**
    * 获取详情页数据

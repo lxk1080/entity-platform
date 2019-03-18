@@ -56,7 +56,7 @@
   import RecruitmentListApis from 'api/recruitmentListApis';
   import { tableMixin, formMixin } from 'common/js/mixins';
   import { formatDate } from 'common/js/utils';
-  import { recruitTypeList, recruitStatusList, searchTypeList } from './constants';
+  import { recruitTypeList, recruitStatusList, searchTypeList } from 'common/js/constants';
 
   // 用来获取vue实例供外部使用
   let self = null;

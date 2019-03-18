@@ -51,7 +51,7 @@ const getHeaders = function(contentType = 'application/json', cacheControl = 'no
 
 const axiosInstance = axios.create({
   baseURL: url,
-  timeout: 5000,
+  timeout: 10000,
   headers: getHeaders('application/x-www-form-urlencoded'),
 });
 
