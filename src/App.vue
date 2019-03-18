@@ -116,6 +116,7 @@
         fix-flex-1()
         flex 1
         height: 100%
+        overflow-y auto
 
     .ivu-menu-vertical
       .ivu-menu-submenu-title-icon

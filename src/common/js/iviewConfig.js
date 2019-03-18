@@ -25,6 +25,7 @@ import {
   Radio,
   Cascader,
   Switch,
+  Upload,
 } from 'iview';
 
 import 'iview/dist/styles/iview.css';
@@ -54,6 +55,7 @@ Vue.component('Radio', Radio);
 Vue.component('Cascader', Cascader);
 // 同样改名
 Vue.component('Switchs', Switch);
+Vue.component('Upload', Upload);
 
 // 由于使用的按需加载的方式，只能加载组件，导致很多初始化在iview入口中的操作并没有做，所以需要自己手动完成
 Vue.prototype.$IVIEW = {

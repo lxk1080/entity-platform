@@ -30,7 +30,7 @@ const BannerApis = {
   /**
    * 编辑 banner
    */
-  update: data => post('/banner/modifyBanner.do', '', data),
+  updateData: data => post('/banner/modifyBanner.do', '', data),
 
   /**
    * 获取详情页数据

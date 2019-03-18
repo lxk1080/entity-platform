@@ -67,7 +67,7 @@ export const RecruitmentListApis = {
    * @param contactUser         （String 非空）联系人姓名
    * @param contactsMobile      （String 非空）联系人电话
    */
-  modifyPosition: data => post('/position/modifyPosition.do', '', data),
+  updateData: data => post('/position/modifyPosition.do', '', data),
 };
 
 export default RecruitmentListApis;

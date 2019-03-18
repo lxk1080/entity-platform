@@ -3,10 +3,9 @@ import { colors } from 'common/js/constants';
 export const searchTypeList = [
   { id: 1, name: '发布人' },
   { id: 2, name: '岗位标题' },
-  { id: 3, name: '岗位类型' },
-  { id: 4, name: '招聘周期' },
-  { id: 5, name: '发布时间' },
-  { id: 6, name: '状态' },
+  { id: 3, name: '招聘周期' },
+  { id: 4, name: '发布时间' },
+  { id: 5, name: '状态' },
 ];
 
 export const recruitTypeList = [

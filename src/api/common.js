@@ -73,3 +73,13 @@ export const postStream = function(url, qs, data = {}, sameKey) {
 
   return axiosInstance.post(composeUrl(url, qs), stream).then(callback);
 };
+
+export const postFile = function(url, qs, data = {}) {
+  const formData = new FormData();
+
+  for (let [key, value] of Object.entries(data)) {
+    formData.append(key, value);
+  }
+
+  return axiosInstance.post(composeUrl(url, qs), formData).then(callback);
+};

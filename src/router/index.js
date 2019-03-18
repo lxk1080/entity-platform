@@ -8,6 +8,7 @@ const EnterpriseDetail = () => import('components/enterprise-list/enterprise-det
 const RecruitmentList = () => import('components/recruitment-list/recruitment-list');
 const RecruitmentDetail = () => import('components/recruitment-list/recruitment-detail');
 const RecruitmentType = () => import('components/recruitment-type/recruitment-type');
+const RecruitmentOperation = () => import('components/recruitment-type/recruitment-operation');
 const UserList = () => import('components/user-management/user-list');
 const UserDetail = () => import('components/user-management/user-detail');
 const NewsList = () => import('components/news-list/news-list');
@@ -51,6 +52,12 @@ export default new Router({
     {
       path: '/recruitment-type',
       component: RecruitmentType,
+      children: [
+        {
+          path: '/recruitment-operation/:id',
+          component: RecruitmentOperation,
+        },
+      ],
     },
     {
       path: '/user-list',

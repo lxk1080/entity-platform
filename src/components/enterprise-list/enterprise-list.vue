@@ -106,7 +106,7 @@
             },
             on: {
               click() {
-                self.entryDetail('enterprise', params.row[self.idName]);
+                self.entryPage('enterprise-detail', params.row[self.idName]);
               },
             },
           }, '详情'),

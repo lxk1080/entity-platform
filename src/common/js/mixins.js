@@ -2,6 +2,7 @@
 import Opertions from 'base/opertions/opertions';
 import Qs from 'qs';
 import { ERR_OK } from 'api/common';
+import { operations } from 'common/js/constants';
 import { formatDate } from 'common/js/utils';
 
 const theadHeight = 40;
@@ -142,22 +143,14 @@ export const tableMixin = {
       return h('span', `至 ${formatDate(new Date(params.row[field]), 'yyyy-MM-dd')}`);
     },
 
-    entryDetail(type, id, query) {
-      let result = `/${type}-detail/${id}`;
+    entryPage(name, id, query) {
+      let result = `/${name}/${id}`;
 
       if (query && typeof query === 'object') {
         result = `${result}?${Qs.stringify(query)}`;
       }
 
       this.$router.push(result);
-    },
-
-    addData() {
-
-    },
-
-    updateData() {
-
     },
   },
 
@@ -188,12 +181,42 @@ export const detailMixin = {
               this.data[key] = '';
             }
           });
+
+          // 如果是添加的操作，获取所有的字段后，都将值置为空
+          if (this.operstionType.id === operations.add.id) {
+            Object.keys(this.data).map(key => {
+              this.data[key] = '';
+            });
+          }
         }
       });
     },
 
-    onReturn() {
+    onReturn(rePath) {
+      if (rePath) {
+        this.$router.push(rePath);
+        return;
+      }
+
       this.$router.back();
+    },
+
+    onAdd() {
+      this.apis.addData(this.data).then(this.callback);
+    },
+
+    async onUpdate() {
+      await this.apis.updateData(this.data).then(this.callback);
+      this.getData();
+    },
+
+    callback(res) {
+      if (res.code !== ERR_OK) {
+        this.$Message.error(res.message);
+        return;
+      }
+
+      this.$Message.success(res.message);
     },
   },
 };
@@ -224,13 +247,13 @@ export const formMixin = {
       let value = '';
       const len = rest.length;
 
-      console.log(formatDate);
-
+      // 单个时间
       if (typeof formatDate === 'string') {
         value = new Date(formatDate).getTime();
       }
 
-      if (Array.isArray(formatDate)) {
+      // 时间段
+      if (Array.isArray(formatDate) && formatDate[0] && formatDate[1]) {
         value = formatDate.join(',');
       }
 

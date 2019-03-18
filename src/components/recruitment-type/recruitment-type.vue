@@ -1,7 +1,7 @@
 <template>
   <div class="recruitment-type">
     <div class="header">
-      <Button @click="addData">新增类型</Button>
+      <Button @click="entryPage('recruitment-operation', 0, { type: operations.add.id })">新增类型</Button>
     </div>
     <div class="table-list">
       <Table border ref="table" :columns="columns" :data="tableData" @on-selection-change="onSelectionChange">
@@ -12,7 +12,7 @@
           <Input class="list-input" v-model="row.sortIndex" style="width: 50px" />
         </template>
         <template slot-scope="{ row }" slot="operation">
-          <Button size="small" style="margin-right: 5px" @click="updateData">编辑</Button>
+          <Button size="small" style="margin-right: 5px" @click="entryPage('recruitment-operation', row[idName], { type: operations.edit.id })">编辑</Button>
           <Button type="error" size="small" @click="deleteSingle(row[idName])">删除</Button>
         </template>
       </Table>
@@ -33,6 +33,7 @@
 <script type="text/ecmascript-6">
   import recruitmentTypeApis from 'api/recruitmentTypeApis';
   import { tableMixin } from 'common/js/mixins';
+  import { operations } from 'common/js/constants';
   import { recruitTypeList } from 'components/recruitment-list/constants';
 
   let self = null;
@@ -84,6 +85,7 @@
         apis: recruitmentTypeApis,
         idName: 'professionId',
         recruitTypeList,
+        operations,
         columns,
       };
     },

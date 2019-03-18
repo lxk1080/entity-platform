@@ -35,7 +35,7 @@
             {{ getOpertionBtnText(row.recruitStatus) }}
           </Button>
           <Button type="error" size="small" style="margin-right: 5px" @click="deleteSingle(row[idName])">删除</Button>
-          <Button type="warning" size="small" @click="entryDetail('recruitment', row[idName], { type: row.recruitType })">详情</Button>
+          <Button type="warning" size="small" @click="entryPage('recruitment-detail', row[idName], { type: row.recruitType })">详情</Button>
         </template>
       </Table>
     </div>
@@ -117,7 +117,7 @@
       recruitType: recruitTypeList[0].id,
       searchTypeList,
       searchType: searchTypeList[0].id,
-      speicalSearchTypes: [4, 5],
+      speicalSearchTypes: [3, 4], // 筛选类型为 招聘周期 和 发布时间
       columns,
     }),
 

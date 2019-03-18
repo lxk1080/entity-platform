@@ -19,6 +19,7 @@ const menus = [
         title: '招聘类型',
         key: '1-3',
         path: '/recruitment-type',
+        children: ['/recruitment-operation'],
       },
     ],
   },

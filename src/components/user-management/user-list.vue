@@ -16,7 +16,7 @@
       <Table border ref="table" :height="tableHeight" :columns="columns" :data="tableData" @on-selection-change="onSelectionChange">
         <template slot-scope="{ row }" slot="operation">
           <Button type="error" size="small" style="margin-right: 5px" @click="deleteSingle(row[idName])">删除</Button>
-          <Button type="warning" size="small" @click="entryDetail('user', row[idName])">详情</Button>
+          <Button type="warning" size="small" @click="entryPage('user-detail', row[idName])">详情</Button>
         </template>
       </Table>
     </div>

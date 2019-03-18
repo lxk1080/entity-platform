@@ -213,7 +213,7 @@
     </Card>
     <div class="footer">
       <Button class="btn-footer" size="large" @click="onReturn">返回</Button>
-      <Button class="btn-footer" size="large" type="primary" style="margin-left: 20px">保存</Button>
+      <Button class="btn-footer" size="large" type="primary" style="margin-left: 20px" @click="onUpdate">保存</Button>
     </div>
   </div>
 </template>

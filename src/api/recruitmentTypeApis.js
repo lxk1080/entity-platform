@@ -1,4 +1,4 @@
-import { post, postStream } from './common';
+import { post, postStream, postFile } from './common';
 
 export const RecruitmentTypeApis = {
   /**
@@ -28,7 +28,7 @@ export const RecruitmentTypeApis = {
    * @param sortIndex      排序
    * @param professionIcon 图标
    */
-  addData: data => post('/profession/addProfession.do', '', data),
+  addData: data => postFile('/profession/addProfession.do', '', data),
 
   /**
    * 编辑
@@ -39,7 +39,14 @@ export const RecruitmentTypeApis = {
    * @param sortIndex      排序
    * @param professionIcon 图标
    */
-  update: data => post('/profession/modifyProfession.do', '', data),
+  updateData: data => postFile('/profession/modifyProfession.do', '', data),
+
+  /**
+   * 获得编辑时的详情数据
+   * @param data
+   * @param sameKey
+   */
+  getDetailData: data => post('/profession/getProfessionById.do', '', data),
 };
 
 export default RecruitmentTypeApis;
