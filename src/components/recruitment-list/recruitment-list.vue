@@ -97,7 +97,7 @@
     {
       title: '招聘周期',
       key: 'onTime',
-      render: (h, params) => self.renderTime(h, params, 'onTime', '长期招聘'),
+      render: (h, params) => self.renderTime(h, params, 'onTime', '长期招聘', 'isLongTerm'),
     },
     {
       title: '操作',

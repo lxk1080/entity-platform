@@ -133,3 +133,14 @@ export const terms = {
     name: '短期招聘',
   },
 };
+
+export const bannerTypes = [
+  { id: 1, name: '自定义内页' },
+  { id: 2, name: '关联到活动' },
+  { id: 3, name: '超链接' },
+];
+
+export const showTypes = [
+  { id: 1, name: '长期展示' },
+  { id: 2, name: '设定时间' },
+];

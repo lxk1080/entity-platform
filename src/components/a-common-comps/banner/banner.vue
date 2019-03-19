@@ -34,7 +34,7 @@
   import BannerApis from 'api/bannerApis';
   import { formatDate } from 'common/js/utils';
   import { tableMixin } from 'common/js/mixins';
-  import { operations } from 'common/js/constants';
+  import { operations, bannerTypes } from 'common/js/constants';
   import { banners } from './constants';
 
   let self = null;
@@ -99,15 +99,16 @@
         {
           title: '广告类型',
           key: 'bannerType',
+          render: (h, params) => self.renderText(h, params, bannerTypes, 'bannerType'),
         },
         {
           title: '访问量',
-          key: 'sortIndex',
+          key: 'visitCount',
         },
         {
           title: '展示时间',
           key: 'endDate',
-          render: (h, params) => self.renderTime(h, params, 'endDate', '长期展示'),
+          render: (h, params) => self.renderTime(h, params, 'endDate', '长期展示', 'isLongShow'),
         },
         {
           title: '排序',

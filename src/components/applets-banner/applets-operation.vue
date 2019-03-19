@@ -1,13 +1,22 @@
 <template>
   <div class="applets-operation">
-    applets
+    <banner-operation-12 :banner="banners.applets" />
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import BannerOperation12 from 'components/a-common-comps/banner/banner-operation-12';
+  import { banners } from 'components/a-common-comps/banner/constants';
+
   export default {
     data() {
-      return {};
+      return {
+        banners,
+      };
+    },
+
+    components: {
+      'banner-operation-12': BannerOperation12,
     },
   };
 </script>
@@ -16,6 +25,6 @@
   @import "~common/stylus/mixin";
 
   .applets-operation
-    layout-absolute()
-    card-style()
+    width 100%
+    height 100%
 </style>

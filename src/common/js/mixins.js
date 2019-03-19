@@ -2,7 +2,7 @@
 import Opertions from 'base/opertions/opertions';
 import Qs from 'qs';
 import { ERR_OK } from 'api/common';
-import { operations, terms } from 'common/js/constants';
+import { operations } from 'common/js/constants';
 import { formatDate } from 'common/js/utils';
 
 const theadHeight = 40;
@@ -136,10 +136,11 @@ export const tableMixin = {
       }, item.name);
     },
 
-    renderTime(h, params, field, defaultText = '') {
-      if (!params.row[field] || params.row.isLongTerm === terms.long.id) {
+    renderTime(h, params, field, defaultText = '', isLongField) {
+      if (!params.row[field] || (isLongField && params.row[isLongField] === 1)) {
         return h('span', defaultText);
       }
+
       return h('span', `至 ${formatDate(new Date(params.row[field]), 'yyyy-MM-dd')}`);
     },
 
@@ -196,8 +197,9 @@ export const detailMixin = {
       this.$router.back();
     },
 
-    onAdd() {
-      this.apis.addData(this.data).then(this.callback);
+    async onAdd() {
+      await this.apis.addData(this.data).then(this.callback);
+      this.onReturn();
     },
 
     async onUpdate() {
@@ -242,7 +244,7 @@ export const formMixin = {
       let value = '';
       const len = rest.length;
 
-      // 单个时间
+      // 单个时间，时间戳
       if (typeof formatDate === 'string') {
         value = new Date(formatDate).getTime();
       }
