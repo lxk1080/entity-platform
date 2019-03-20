@@ -48,7 +48,7 @@ Vue.component('DatePicker', DatePicker);
 Vue.component('Card', Card);
 Vue.component('Row', Row);
 // 由于Col在原生html标签中是自闭合的，所以使用iview中的Col闭合标签会代码检查报错，这里改下名字
-Vue.component('Cols', Col);
+Vue.component('i-col', Col);
 Vue.component('AutoComplete', AutoComplete);
 Vue.component('RadioGroup', RadioGroup);
 Vue.component('Radio', Radio);

@@ -117,6 +117,7 @@
         flex 1
         height: 100%
         overflow-y auto
+        background $page-background
 
     .ivu-menu-vertical
       .ivu-menu-submenu-title-icon

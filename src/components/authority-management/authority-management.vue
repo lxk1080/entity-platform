@@ -9,5 +9,8 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  @import "~common/stylus/mixin";
 
+  .authority-management
+    page-base()
 </style>

@@ -3,6 +3,7 @@ export const colors = {
   success: '#19be6b',
   error: '#ed4014',
   warn: '#ff9900',
+  purple: '#E46CBB',
 };
 
 export const operations = {
