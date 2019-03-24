@@ -27,7 +27,9 @@ const PackageManagement = () => import('components/package-management/package-ma
 const InvoiceManagement = () => import('components/invoice-management/invoice-management');
 const DataStatistics = () => import('components/data-statistics/data-statistics');
 const AccountManagement = () => import('components/account-management/account-management');
+const AccountOperation = () => import('components/account-management/account-operation');
 const AuthorityManagement = () => import('components/authority-management/authority-management');
+const AuthorityOperation = () => import('components/authority-management/authority-operation');
 const OperationLog = () => import('components/operation-log/operation-log');
 
 export default new Router({
@@ -147,10 +149,22 @@ export default new Router({
     {
       path: '/account-management',
       component: AccountManagement,
+      children: [
+        {
+          path: '/account-operation/:id',
+          component: AccountOperation,
+        },
+      ],
     },
     {
       path: '/authority-management',
       component: AuthorityManagement,
+      children: [
+        {
+          path: '/authority-operation/:id',
+          component: AuthorityOperation,
+        },
+      ],
     },
     {
       path: '/operation-log',

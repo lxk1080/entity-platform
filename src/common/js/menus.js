@@ -122,11 +122,13 @@ const menus = [
         title: '账号管理',
         key: '7-2',
         path: '/account-management',
+        children: ['/account-operation'],
       },
       {
         title: '权限管理',
         key: '7-3',
         path: '/authority-management',
+        children: ['/authority-operation'],
       },
       {
         title: '操作日志',

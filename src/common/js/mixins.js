@@ -75,7 +75,10 @@ export const tableMixin = {
     },
 
     changeHeaderFirstText(text) {
-      document.querySelector('.ivu-table-wrapper .ivu-table-cell-with-selection').innerHTML = text;
+      const dom = document.querySelector('.ivu-table-wrapper .ivu-table-cell-with-selection');
+      if (dom) {
+        dom.innerHTML = text;
+      }
     },
 
     handleSelectAll(status) {
@@ -183,6 +186,12 @@ export const detailMixin = {
       this.apis.getDetailData({ [this.idName]: this.$route.params.id }).then(res => {
         if (res.code === ERR_OK) {
           this.data = res.result;
+
+          // 对有密码的单独处理，直接清空密码
+          if (this.data.password !== void 0) {
+            this.data.password = '';
+            this.data.confirmPassword = this.data.password;
+          }
 
           Object.keys(this.data).forEach(key => {
             if (this.data[key] === null || this.data[key] === void 0) {

@@ -4,6 +4,7 @@ import Cookie from 'js-cookie';
 
 export const url = 'http://ningbo.hanchengvip.com/essence-server';
 // export const url = 'http://192.168.1.102:8080/essence-server';
+// export const url = 'http://192.168.1.107:8080/essence-server';
 
 export const ERR_OK = '0';
 
@@ -63,12 +64,18 @@ export const post = function(url, qs, data = {}) {
   return axiosInstance.post(url, Qs.stringify(data), { params: qs }).then(callback);
 };
 
-export const postStream = function(url, qs, data = {}, sameKey) {
+export const postStream = function(url, qs, data = [], sameKey, others = {}) {
   const stream = new URLSearchParams();
   const isArr = Array.isArray(data);
 
   for (let [key, value] of Object.entries(data)) {
     stream.append(isArr ? sameKey : key, value);
+  }
+
+  if (others) {
+    for (let [key, value] of Object.entries(others)) {
+      stream.append(key, value);
+    }
   }
 
   return axiosInstance.post(composeUrl(url, qs), stream).then(callback);

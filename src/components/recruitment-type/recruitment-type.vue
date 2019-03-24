@@ -1,7 +1,7 @@
 <template>
   <div class="recruitment-type">
     <div class="header">
-      <Button @click="entryPage('recruitment-operation', 0, { type: operations.add.id })">新增类型</Button>
+      <Button @click="entryPage('recruitment-operation', 0, { type: operations.add.id })">新建账户</Button>
     </div>
     <div class="table-list">
       <Table border ref="table" :columns="columns" :data="tableData" @on-selection-change="onSelectionChange">
@@ -107,7 +107,4 @@
 
   .recruitment-type
     page-base()
-    .list-input
-      input
-        text-align center
 </style>

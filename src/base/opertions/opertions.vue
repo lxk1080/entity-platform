@@ -5,6 +5,8 @@
       <Button @click="handleSelectAll(false)">取消全选</Button>
       <Button @click="exportData('data')">导出</Button>
       <Button @click="deleteSelected">删除</Button>
+      <Button v-if="showActiveBtn" @click="onActiveClick(true)">锁定</Button>
+      <Button v-if="showActiveBtn" @click="onActiveClick(false)">解锁</Button>
     </div>
     <div class="opertions-right">
       <Page
@@ -33,6 +35,10 @@
         type: Number,
         default: 10,
       },
+      showActiveBtn: {
+        type: Boolean,
+        default: false,
+      },
     },
 
     methods: {
@@ -50,6 +56,10 @@
 
       onPageChange(page) {
         this.$emit('onPageChange', page);
+      },
+
+      onActiveClick(toggle) {
+        this.$emit('onActiveClick', toggle);
       },
     },
   };
