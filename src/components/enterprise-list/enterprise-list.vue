@@ -6,6 +6,14 @@
           <Option v-for="(item, i) in searchTypeList" :value="item.id" :key="i">{{ item.name }}</Option>
         </Select>
         <Input v-model="keyWords" placeholder="Enter something..." style="width: 200px" />
+        <span style="margin-left: 20px; font-size: 12px">实名认证状态：</span>
+        <Select v-model="authStatus" style="width: 100px">
+          <Option v-for="(item, i) in activatedList" :value="item.id" :key="i">{{ item.name }}</Option>
+        </Select>
+        <span style="margin-left: 20px; font-size: 12px">企业认证状态：</span>
+        <Select v-model="activated" style="width: 100px">
+          <Option v-for="(item, i) in activatedList" :value="item.id" :key="i">{{ item.name }}</Option>
+        </Select>
       </div>
       <div class="header-right">
         <Button type="primary" @click="search">立即检索</Button>
@@ -125,6 +133,9 @@
         searchTypeList,
         searchType: searchTypeList[0].id,
         columns,
+        activatedList,
+        authStatus: '',
+        activated: '',
       };
     },
 
@@ -134,7 +145,15 @@
 
     methods: {
       getData() {
-        const data = this.transformArgs(['pageSize', 'pageNum', 'keyWords', 'searchType']);
+        const data = this.transformArgs([
+          'pageSize',
+          'pageNum',
+          'keyWords',
+          'searchType',
+          'authStatus',
+          'activated',
+        ]);
+
         this.getDataByCommFunc(data);
       },
     },

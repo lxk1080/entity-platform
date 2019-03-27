@@ -3,6 +3,7 @@ import Router from 'vue-router';
 
 Vue.use(Router);
 
+const Login = () => import('components/login/login');
 const EnterpriseList = () => import('components/enterprise-list/enterprise-list');
 const EnterpriseDetail = () => import('components/enterprise-list/enterprise-detail');
 const RecruitmentList = () => import('components/recruitment-list/recruitment-list');
@@ -36,7 +37,11 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/enterprise-list',
+      redirect: '/login',
+    },
+    {
+      path: '/login',
+      component: Login,
     },
     {
       path: '/enterprise-list',

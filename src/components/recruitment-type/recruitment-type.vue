@@ -9,7 +9,7 @@
           <Avatar class="avatar" size="large" :src="row.professionIcon || 'https://i.loli.net/2017/08/21/599a521472424.jpg'" />
         </template>
         <template slot-scope="{ row }" slot="sort">
-          <Input class="list-input" v-model="row.sortIndex" style="width: 50px" />
+          <Input class="list-input" v-model="row.sortIndex" style="width: 50px" @on-blur="onSortBlur(row[idName], row.sortIndex)" />
         </template>
         <template slot-scope="{ row }" slot="operation">
           <Button size="small" style="margin-right: 5px" @click="entryPage('recruitment-operation', row[idName], { type: operations.edit.id })">编辑</Button>

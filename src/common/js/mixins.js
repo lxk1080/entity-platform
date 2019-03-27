@@ -109,6 +109,10 @@ export const tableMixin = {
       this.apis.deleteMulData(this.selectedRowIds, 'id').then(this.errorCallback);
     },
 
+    onSortBlur(id, sortIndex) {
+      this.apis.updateData({ [this.idName]: id, sortIndex }).then(this.errorCallback);
+    },
+
     successCallback(res) {
       if (res.code === ERR_OK) {
         this.$Message.success(res.message);
