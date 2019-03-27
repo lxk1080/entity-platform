@@ -1,4 +1,4 @@
-import { post, postStream } from './common';
+import { post } from './common';
 
 const AuthorityApis = {
   /**
@@ -14,16 +14,9 @@ const AuthorityApis = {
   getAuthorityList: data => post('/admin/getAuthorityList.do', '', data),
 
   /**
-   * 获取详情页数据
-   * @param data => roleId
+   * 修改权限
    */
-  getDetailData: data => post('/admin/getRoleById.do', '', data),
-
-  /**
-   * 锁定和冻结
-   * @param data
-   */
-  updateActiveds: (data, sameKey, others) => postStream('/admin/modifyBatch.do', '', data, sameKey, others),
+  updateAuthority: data => post('/platform/modifyRole.do', '', data),
 };
 
 export default AuthorityApis;
