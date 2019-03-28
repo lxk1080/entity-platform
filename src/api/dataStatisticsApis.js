@@ -9,3 +9,11 @@ const DataStatisticsApis = {
 };
 
 export default DataStatisticsApis;
+
+/***
+ 统计岗位发布柱状图
+ 接口：platform/countPositionList
+ 参数：
+ dateType：时间类型1本周，2本月，3本年
+ recruitType：岗位类型：1实习 3兼职
+ */

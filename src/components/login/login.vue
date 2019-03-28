@@ -4,7 +4,6 @@
       <Card icon="log-in" title="欢迎登录" :bordered="false">
         <div class="form-con">
           <login-form @on-success-valid="handleSubmit" />
-          <p class="login-tip">用户名和密码</p>
         </div>
       </Card>
     </div>
@@ -12,12 +11,34 @@
 </template>
 
 <script>
+  import LoginApis from 'api/LoginApis';
   import LoginForm from 'base/login-form';
+  import { ERR_OK } from 'api/common';
+  import { mapMutations } from 'vuex';
 
   export default {
-    methods: {
-      handleSubmit ({ userName, password }) {
+    data() {
+      return {
+        apis: LoginApis,
+      };
+    },
 
+    methods: {
+      ...mapMutations({
+        'setUser': 'SET_USER',
+      }),
+
+      handleSubmit ({ username, password }) {
+        this.apis.login({ username, password }).then(res => {
+          if (res.code !== ERR_OK) {
+            this.$Message.error(res.message);
+            return;
+          }
+
+          this.setUser(res.result);
+          sessionStorage.username = res.result.username;
+          this.$router.push('/enterprise-list');
+        });
       },
     },
 
@@ -45,8 +66,4 @@
         padding 30px 0
         .form-con
           padding 10px 0 0
-        .login-tip
-           font-size 10px
-           text-align center
-           color #c3c3c3
 </style>

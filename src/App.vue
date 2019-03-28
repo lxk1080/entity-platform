@@ -16,7 +16,7 @@
           </Submenu>
         </Menu>
       </div>
-      <div class="content" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 901">
+      <div class="content" :style="getStyle">
         <router-view />
       </div>
     </div>
@@ -25,6 +25,16 @@
 
 <script type="text/ecmascript-6">
   import menus from 'common/js/menus';
+  import { mapGetters } from 'vuex';
+
+  const loginStyle = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: 901,
+  };
 
   export default {
     name: 'App',
@@ -35,6 +45,17 @@
         activeName: '1-1',
         openName: ['1'],
       };
+    },
+
+    computed: {
+      ...mapGetters([
+        'user',
+      ]),
+
+      getStyle() {
+        if (!this.user) return loginStyle;
+        return sessionStorage.username ? '' : loginStyle;
+      },
     },
 
     methods: {
@@ -71,7 +92,16 @@
     },
 
     watch: {
-      $route(to) {
+      $route(to, fr) {
+        // 这里判断是否登录
+        if (!sessionStorage.username) {
+          this.$router.push('/login');
+          return;
+        }
+        if (sessionStorage.username && to.fullPath === '/login') {
+          this.$router.push(fr);
+        }
+
         sessionStorage.currentPath = to.fullPath;
 
         // 刷新页面或网页后退前进时，使UI可以定位到正确的MenuItem上
@@ -91,6 +121,10 @@
     width 100%
     height 100%
     min-width 1200px
+    .main,
+    .login
+      width 100%
+      height 100%
     .app-header
       flex 0 0 60px
       height 60px

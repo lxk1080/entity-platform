@@ -16,7 +16,7 @@ const AuthorityApis = {
   /**
    * 修改权限
    */
-  updateAuthority: data => post('/platform/modifyRole.do', '', data),
+  updateAuthority: data => post('/admin/modifyRole.do', '', data),
 };
 
 export default AuthorityApis;
