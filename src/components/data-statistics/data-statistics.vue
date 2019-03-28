@@ -11,14 +11,11 @@
     <Row :gutter="20" style="margin-top: 10px;">
       <i-col :md="24" :lg="24" style="margin-bottom: 20px">
         <Card shadow>
-          <RadioGroup @on-change="() => {}">
-            <Radio label="1">{{ '本周' }}</Radio>
-            <Radio label="2">{{ '月份' }}</Radio>
-            <Radio label="3">{{ '年份' }}</Radio>
+          <RadioGroup v-model="dateType" @on-change="onDateChange">
+            <Radio v-for="(item, index) in dateTypes" :label="item.id" :key="index">{{ item.name }}</Radio>
           </RadioGroup>
-          <Select value="1" style="width: 200px">
-            <Option value="1">{{ '全部类型' }}</Option>
-            <Option value="2">{{ '家庭教育' }}</Option>
+          <Select v-model="recruitType" style="width: 200px" @on-change="onDateChange">
+            <Option v-for="(item, index) in recruitTypeList" :value="item.id" :key="index">{{ item.name }}</Option>
           </Select>
           <div ref="postDom" style="height: 400px" />
         </Card>
@@ -55,6 +52,18 @@
 
   echarts.registerTheme('tdTheme', tdTheme);
 
+  const dateTypes = [
+    { id: 1, name: '本周' },
+    { id: 2, name: '本月' },
+    { id: 3, name: '本年' },
+  ];
+
+  const recruitTypeList = [
+    { id: 0, name: '全部类型' },
+    { id: 1, name: '实习' },
+    { id: 2, name: '兼职' },
+  ];
+
   const inforCardData = [
     { title: '总企业数量', icon: 'ios-heart', count: 0, color: colors.info, key: 'enterprisTotal' },
     { title: '总招聘岗位数量', icon: 'md-build', count: 0, color: colors.success, key: 'recruitTotal' },
@@ -80,6 +89,10 @@
     data() {
       return {
         apis: DataStatisticsApis,
+        dateTypes,
+        dateType: dateTypes[0].id,
+        recruitTypeList,
+        recruitType: recruitTypeList[0].id,
         inforCardData,
         barData,
         postDom: null,
@@ -108,31 +121,44 @@
     },
 
     methods: {
+      onDateChange() {
+        this.initPostCharts();
+      },
+
       initPostCharts() {
-        const xAxisData = Object.keys(this.barData);
-        const seriesData = Object.values(this.barData);
-        const option = {
-          title: {
-            text: '岗位发布统计',
-            x: 'center',
-          },
-          xAxis: {
-            type: 'category',
-            data: xAxisData,
-          },
-          yAxis: {
-            type: 'value',
-          },
-          series: [
-            {
-              name: 'day',
-              data: seriesData,
-              type: 'bar',
+        this.apis.updateData({
+          dateType: this.dateType,
+          recruitType: this.recruitType,
+        }).then(res => {
+          const data = {};
+          res.result.map(item => {
+            data[item.weekDate] = item.number;
+          });
+          const xAxisData = Object.keys(data);
+          const seriesData = Object.values(data);
+          const option = {
+            title: {
+              text: '岗位发布统计',
+              x: 'center',
             },
-          ],
-        };
-        this.postDom = echarts.init(this.$refs.postDom, 'tdTheme');
-        this.postDom.setOption(option);
+            xAxis: {
+              type: 'category',
+              data: xAxisData,
+            },
+            yAxis: {
+              type: 'value',
+            },
+            series: [
+              {
+                name: 'day',
+                data: seriesData,
+                type: 'bar',
+              },
+            ],
+          };
+          this.postDom = echarts.init(this.$refs.postDom, 'tdTheme');
+          this.postDom.setOption(option);
+        });
       },
 
       initOrderCharts() {

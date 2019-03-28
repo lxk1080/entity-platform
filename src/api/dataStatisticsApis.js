@@ -6,6 +6,8 @@ const DataStatisticsApis = {
    * @param data
    */
   getStatisticData: data => post('/platform/platformCount.do', '', data),
+
+  updateData: data => post('/platform/countPositionList.do', '', data),
 };
 
 export default DataStatisticsApis;
