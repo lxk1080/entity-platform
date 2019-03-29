@@ -1,8 +1,8 @@
 <template>
   <div class="recruitment-type">
-    <div class="header">
+    <!--<div class="header">
       <Button @click="entryPage('recruitment-operation', 0, { type: operations.add.id })">新建账户</Button>
-    </div>
+    </div>-->
     <div class="table-list">
       <Table border ref="table" :columns="columns" :data="tableData" @on-selection-change="onSelectionChange">
         <template slot-scope="{ row }" slot="icon">
@@ -21,6 +21,7 @@
       :pageNum="pageNum"
       :pageSize="pageSize"
       :total="total"
+      :showExport="false"
       @handleSelectAll="handleSelectAll"
       @exportData="exportData"
       @deleteSelected="deleteSelected"

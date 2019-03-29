@@ -3,7 +3,7 @@
     <div class="opertions-left">
       <Button @click="handleSelectAll(true)">设置全选</Button>
       <Button @click="handleSelectAll(false)">取消全选</Button>
-      <Button @click="exportData('data')">导出</Button>
+      <Button @click="exportData('data')" v-if="showExport">导出</Button>
       <Button @click="deleteSelected">删除</Button>
       <Button v-if="showActiveBtn" @click="onActiveClick(true)">锁定</Button>
       <Button v-if="showActiveBtn" @click="onActiveClick(false)">解锁</Button>
@@ -38,6 +38,10 @@
       showActiveBtn: {
         type: Boolean,
         default: false,
+      },
+      showExport: {
+        type: Boolean,
+        default: true,
       },
     },
 
