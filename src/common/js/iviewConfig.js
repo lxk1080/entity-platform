@@ -29,6 +29,9 @@ import {
   Form,
   FormItem,
   Tree,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
 } from 'iview';
 
 import 'iview/dist/styles/iview.css';
@@ -62,6 +65,9 @@ Vue.component('Upload', Upload);
 Vue.component('Form', Form);
 Vue.component('FormItem', FormItem);
 Vue.component('Tree', Tree);
+Vue.component('Dropdown', Dropdown);
+Vue.component('DropdownMenu', DropdownMenu);
+Vue.component('DropdownItem', DropdownItem);
 
 // 由于使用的按需加载的方式，只能加载组件，导致很多初始化在iview入口中的操作并没有做，所以需要自己手动完成
 Vue.prototype.$IVIEW = {

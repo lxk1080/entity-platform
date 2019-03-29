@@ -34,9 +34,8 @@
             this.$Message.error(res.message);
             return;
           }
-
+          sessionStorage.user = JSON.stringify(res.result);
           this.setUser(res.result);
-          sessionStorage.username = res.result.username;
           this.$router.push('/enterprise-list');
         });
       },
@@ -49,10 +48,15 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  @import "~common/stylus/variable"
+
   .login
+    position fixed
+    top 0
+    left 0
     width 100%
     height 100%
-    position relative
+    background $page-background
     &-con
       position absolute
       left 50%

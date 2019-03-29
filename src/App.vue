@@ -1,39 +1,50 @@
 <template>
   <div class="app">
-    <header class="app-header">
-      <div class="logo">明日箐英系统管理</div>
-    </header>
-    <div class="app-main">
-      <div class="sider">
-        <Menu class="sider-menu" ref="menu" theme="dark" :active-name="activeName" :open-names="openName" accordion>
-          <Submenu v-for="menu in menus" :key="menu.key" :name="menu.key">
-            <template slot="title">
-              <Icon type="ios-paper" />{{menu.title}}
-            </template>
-            <Menu-Item v-for="subMenu in menu.subMenus" :key="subMenu.key" :name="subMenu.key" :to="subMenu.path">
-              {{subMenu.title}}
-            </Menu-Item>
-          </Submenu>
-        </Menu>
+    <div class="main" v-if="user.username">
+      <header class="app-header">
+        <div class="logo">明日箐英系统管理</div>
+        <div class="admin">
+          <Dropdown @on-click="onDropDownClick">
+            <div class="admin-text">{{ user.username }}<Icon type="ios-arrow-down" /></div>
+            <DropdownMenu slot="list">
+              <DropdownItem :name="dropdowns.logout">退出登录</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </div>
+      </header>
+      <div class="app-main">
+        <div class="sider">
+          <Menu class="sider-menu" ref="menu" theme="dark" :active-name="activeName" :open-names="openName" accordion>
+            <Submenu v-for="menu in menus" :key="menu.key" :name="menu.key">
+              <template slot="title">
+                <Icon type="ios-paper" />{{menu.title}}
+              </template>
+              <Menu-Item v-for="subMenu in menu.subMenus" :key="subMenu.key" :name="subMenu.key" :to="subMenu.path">
+                {{subMenu.title}}
+              </Menu-Item>
+            </Submenu>
+          </Menu>
+        </div>
+        <div class="content">
+          <router-view />
+        </div>
       </div>
-      <div class="content" :style="getStyle">
-        <router-view />
-      </div>
+    </div>
+    <!--作为登录专用组件-->
+    <div class="login" v-if="!user.username">
+      <router-view />
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import LoginApis from 'api/LoginApis';
   import menus from 'common/js/menus';
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapMutations } from 'vuex';
+  import { ERR_OK } from 'api/common';
 
-  const loginStyle = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    zIndex: 901,
+  const dropdowns = {
+    logout: 'logout',
   };
 
   export default {
@@ -41,9 +52,11 @@
 
     data() {
       return {
+        apis: LoginApis,
         menus,
         activeName: '1-1',
         openName: ['1'],
+        dropdowns,
       };
     },
 
@@ -51,14 +64,37 @@
       ...mapGetters([
         'user',
       ]),
+    },
 
-      getStyle() {
-        if (!this.user) return loginStyle;
-        return sessionStorage.username ? '' : loginStyle;
-      },
+    mounted() {
+      if (sessionStorage.user) {
+        this.setUser(JSON.parse(sessionStorage.user));
+      }
     },
 
     methods: {
+      ...mapMutations({
+        'setUser': 'SET_USER',
+      }),
+
+      onDropDownClick(name) {
+        if (name === dropdowns.logout) {
+          this.logout();
+        }
+      },
+
+      logout() {
+        this.apis.logout().then(res => {
+          if (res.code !== ERR_OK) {
+            this.$Message.error(res.message);
+            return;
+          }
+          sessionStorage.removeItem('user');
+          this.setUser({});
+          this.$router.push('/login');
+        });
+      },
+
       getActiveItem() {
         if (!sessionStorage.currentPath) return;
 
@@ -94,12 +130,15 @@
     watch: {
       $route(to, fr) {
         // 这里判断是否登录
-        if (!sessionStorage.username) {
+        if (!sessionStorage.user) {
           this.$router.push('/login');
           return;
         }
-        if (sessionStorage.username && to.fullPath === '/login') {
+
+        // 如果登录了，但是强行走登录的路由，直接返回之前的路由
+        if (sessionStorage.user && to.fullPath === '/login') {
           this.$router.push(fr);
+          return;
         }
 
         sessionStorage.currentPath = to.fullPath;
@@ -121,39 +160,49 @@
     width 100%
     height 100%
     min-width 1200px
-    .main,
     .login
+      position relative
       width 100%
       height 100%
-    .app-header
-      flex 0 0 60px
-      height 60px
-      line-height 60px
-      background $header-background
-      .logo
-        width 280px
-        text-align center
-        color $white
-        font-size 22px
-        font-weight 600
-        background $logo-background
-    .app-main
-      flex 1
-      display flex
-      .sider
-        flex 0 0 280px
-        width 280px
-        .sider-menu
-          height 100%
-          width 100% !important
-      .content
-        fix-flex-1()
+    .main
+      width 100%
+      height 100%
+      .app-header
+        flex 0 0 60px
+        display flex
+        justify-content space-between
+        padding-right 30px
+        height 60px
+        line-height 60px
+        background $header-background
+        .logo
+          width 280px
+          text-align center
+          color $white
+          font-size 22px
+          font-weight 600
+          background $logo-background
+        .admin
+          .admin-text
+            color $white
+            cursor pointer
+      .app-main
         flex 1
-        height: 100%
-        overflow-y auto
-        background $page-background
+        display flex
+        .sider
+          flex 0 0 280px
+          width 280px
+          .sider-menu
+            height 100%
+            width 100% !important
+        .content
+          fix-flex-1()
+          flex 1
+          height: 100%
+          overflow-y auto
+          background $page-background
 
-    .ivu-menu-vertical
-      .ivu-menu-submenu-title-icon
-        top 0
+      .ivu-menu-vertical
+        .ivu-menu-submenu-title-icon
+          top 0
 </style>

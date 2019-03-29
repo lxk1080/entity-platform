@@ -2,9 +2,10 @@ import axios from 'axios';
 import Qs from 'qs';
 import Cookie from 'js-cookie';
 
-export const url = 'http://ningbo.hanchengvip.com/essence-server';
+// export const url = 'http://ningbo.hanchengvip.com/essence-server';
 // export const url = 'http://192.168.1.102:8080/essence-server';
 // export const url = 'http://192.168.1.107:8080/essence-server';
+export const url = 'http://kt9zsi.natappfree.cc/essence-server';
 
 export const ERR_OK = '0';
 
@@ -53,6 +54,7 @@ const getHeaders = function(contentType = 'application/json', cacheControl = 'no
 const axiosInstance = axios.create({
   baseURL: url,
   timeout: 10000,
+  withCredentials: true,
   headers: getHeaders('application/x-www-form-urlencoded'),
 });
 
