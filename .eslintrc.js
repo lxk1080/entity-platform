@@ -46,6 +46,6 @@ module.exports = {
     // 设置：解决iview中的Col组件闭合报错问题
     'vue/no-parsing-error': [2, { 'x-invalid-end-tag': false }],
     // 忽略：驼峰式写法
-    'camelcase': 0,
+    'camelcase': [0],
   }
 };

@@ -155,16 +155,16 @@
   @import "common/stylus/fixable"
 
   .app
-    display flex
-    flex-direction column
     width 100%
-    height 100%
     min-width 1200px
+    height 100%
     .login
       position relative
       width 100%
       height 100%
     .main
+      display flex
+      flex-direction column
       width 100%
       height 100%
       .app-header
