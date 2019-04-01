@@ -29,7 +29,7 @@
     <div class="table-list">
       <Table border ref="table" :height="tableHeight" :columns="columns" :data="tableData" @on-selection-change="onSelectionChange">
         <template slot-scope="{ row }" slot="sort">
-          <Input class="list-input" v-model="row.sortIndex" style="width: 50px" />
+          <Input class="list-input" v-model="row.sortIndex" style="width: 50px" @on-blur="onSortBlur(row[idName], row.sortIndex)" />
         </template>
         <template slot-scope="{ row }" slot="operation">
           <Button size="small" style="margin-right: 5px" @click="entryPage('news-operation', row[idName], { type: operations.edit.id })">编辑</Button>

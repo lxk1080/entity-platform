@@ -69,6 +69,12 @@
     mounted() {
       if (sessionStorage.user) {
         this.setUser(JSON.parse(sessionStorage.user));
+
+        const path = window.location.hash.substring(1);
+
+        if (path === '/login' || path === '/') {
+          this.$router.push('/enterprise-list');
+        }
       }
     },
 
@@ -136,7 +142,7 @@
         }
 
         // 如果登录了，但是强行走登录的路由，直接返回之前的路由
-        if (sessionStorage.user && to.fullPath === '/login') {
+        if (sessionStorage.user && (to.fullPath === '/login' || to.fullPath === '/')) {
           this.$router.push(fr);
           return;
         }
