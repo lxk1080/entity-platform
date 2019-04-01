@@ -1,5 +1,8 @@
 <template>
   <div class="login">
+    <div class="login-logo">
+      <img src="../../../static/img/logo.png" alt="img">
+    </div>
     <div class="login-con">
       <Card icon="log-in" title="欢迎登录" :bordered="false">
         <div class="form-con">
@@ -56,7 +59,12 @@
     left 0
     width 100%
     height 100%
-    background $page-background
+    background url("../../../static/img/background.jpg") no-repeat
+    background-size cover
+    overflow hidden
+    &-logo
+      margin-top 150px
+      text-align center
     &-con
       position absolute
       left 50%
