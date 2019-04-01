@@ -21,6 +21,10 @@
               <Option v-for="(item, i) in recruitStatusList" :value="item.id" :key="i">{{ item.name }}</Option>
             </Select>
           </div>
+          <div class="row-item" style="display: flex; align-items: center;">
+            <span>推荐：</span>
+            <Switchs v-model="data.activated" :trueValue="1" :falseValue="2" />
+          </div>
         </div>
         <div class="content-row">
           <div class="row-item">

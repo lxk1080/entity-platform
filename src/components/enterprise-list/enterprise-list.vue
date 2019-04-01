@@ -8,7 +8,7 @@
         <Input v-model="keyWords" placeholder="Enter something..." style="width: 200px" />
         <span style="margin-left: 20px; font-size: 12px">实名认证状态：</span>
         <Select v-model="authStatus" style="width: 100px">
-          <Option v-for="(item, i) in activatedList" :value="item.id" :key="i">{{ item.name }}</Option>
+          <Option v-for="(item, i) in authStatusList" :value="item.id" :key="i">{{ item.name }}</Option>
         </Select>
         <span style="margin-left: 20px; font-size: 12px">企业认证状态：</span>
         <Select v-model="activated" style="width: 100px">
@@ -42,7 +42,14 @@
   // 用来获取vue实例供外部使用
   let self = null;
 
+  const authStatusList = [
+    { id: 0, name: '全部', color: colors.success },
+    { id: 1, name: '已实名', color: colors.error },
+    { id: 2, name: '未实名', color: colors.warn },
+  ];
+
   const activatedList = [
+    { id: 0, name: '全部', color: colors.success },
     { id: 1, name: '已通过', color: colors.success },
     { id: 2, name: '未通过', color: colors.error },
     { id: 3, name: '待审核', color: colors.warn },
@@ -133,9 +140,10 @@
         searchTypeList,
         searchType: searchTypeList[0].id,
         columns,
+        authStatusList,
+        authStatus: authStatusList[0].id,
         activatedList,
-        authStatus: '',
-        activated: '',
+        activated: activatedList[0].id,
       };
     },
 
@@ -155,6 +163,16 @@
         ]);
 
         this.getDataByCommFunc(data);
+      },
+    },
+
+    watch: {
+      authStatus() {
+        this.getData();
+      },
+
+      activated() {
+        this.getData();
       },
     },
   };

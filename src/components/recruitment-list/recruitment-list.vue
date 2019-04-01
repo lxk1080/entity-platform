@@ -4,6 +4,7 @@
       <div class="header-left">
         <span>招聘类型：</span>
         <Select v-model="recruitType" style="width: 100px">
+          <Option :value="0">全部</Option>
           <Option v-for="(item, i) in recruitTypeList" :value="item.id" :key="i">{{ item.name }}</Option>
         </Select>
         <span style="margin-left: 20px">选择筛选条件：</span>
@@ -114,7 +115,7 @@
       apis: RecruitmentListApis,
       idName: 'positionId',
       recruitTypeList,
-      recruitType: recruitTypeList[0].id,
+      recruitType: 0,
       searchTypeList,
       searchType: searchTypeList[0].id,
       speicalSearchTypes: [3, 4], // 筛选类型为 招聘周期 和 发布时间

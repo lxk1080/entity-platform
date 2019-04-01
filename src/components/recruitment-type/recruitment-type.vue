@@ -13,7 +13,7 @@
         </template>
         <template slot-scope="{ row }" slot="operation">
           <Button size="small" style="margin-right: 5px" @click="entryPage('recruitment-operation', row[idName], { type: operations.edit.id })">编辑</Button>
-          <Button type="error" size="small" @click="deleteSingle(row[idName])">删除</Button>
+          <!--<Button type="error" size="small" @click="deleteSingle(row[idName])">删除</Button>-->
         </template>
       </Table>
     </div>
@@ -22,6 +22,7 @@
       :pageSize="pageSize"
       :total="total"
       :showExport="false"
+      :showDelate="false"
       @handleSelectAll="handleSelectAll"
       @exportData="exportData"
       @deleteSelected="deleteSelected"

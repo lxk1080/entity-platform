@@ -59,7 +59,7 @@
         <div class="content-row">
           <div class="row-item">
             <span>　　内容：</span>
-            <vue-editor class="editor" v-model="data.content" />
+            <vue-editor v-if="data.bannerType === 1" class="editor" v-model="data.content" />
           </div>
         </div>
         <div class="content-row">
@@ -130,7 +130,7 @@
           imageUrl: '',
           sortIndex: '',
           activated: 2,
-          bannerType: '',
+          bannerType: 1,
           activityId: '',
           hyperlink: '',
           content: '',

@@ -26,6 +26,14 @@
         </div>
         <div class="content-row">
           <div class="row-item">
+            <span>　　分类：</span>
+            <Select v-model="data.newsType" style="width: 100px">
+              <Option v-for="(item, i) in newList" :value="item.id" :key="i">{{ item.name }}</Option>
+            </Select>
+          </div>
+        </div>
+        <div class="content-row">
+          <div class="row-item">
             <span>　　内容：</span>
             <vue-editor class="editor" v-model="data.newsContent" />
           </div>
@@ -46,12 +54,19 @@
   import { operations } from 'common/js/constants';
   import { VueEditor } from 'vue2-editor';
 
+  const newList = [
+    { id: 1, name: '箐英动态' },
+    { id: 2, name: '社团展示' },
+    { id: 3, name: '公益活动' },
+  ];
+
   export default {
     mixins: [detailMixin],
 
     data() {
       return {
         operations,
+        newList,
         operstionType: operations.add,
         apis: NewsListApis,
         idName: 'newsId',
@@ -59,6 +74,7 @@
           newsTitle: '',
           releaseStatus: 2,
           sortIndex: '',
+          newsType: newList[0].id,
           newsContent: '',
         },
       };
