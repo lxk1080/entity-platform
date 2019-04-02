@@ -134,7 +134,7 @@
     },
 
     watch: {
-      $route(to, fr) {
+      $route(to, from) {
         // 这里判断是否登录
         if (!sessionStorage.user) {
           this.$router.push('/login');
@@ -143,10 +143,38 @@
 
         // 如果登录了，但是强行走登录的路由，直接返回之前的路由
         if (sessionStorage.user && (to.fullPath === '/login' || to.fullPath === '/')) {
-          this.$router.push(fr);
+          this.$router.push(from);
           return;
         }
 
+        if (to.fullPath === '/authority-miss') return;
+
+        // 判断是否有权限
+        if (to.fullPath !== '/authority-miss') {
+          const authorityIds = JSON.parse(sessionStorage.user).authorityIds.split(',').map(v => parseInt(v));
+          let flag = false;
+
+          for (let i = 0; i < menus.length; i++) {
+            const menu = menus[i];
+
+            for (let j = 0; j < menu.subMenus.length; j++) {
+              const subMenu = menu.subMenus[j];
+
+              if (subMenu.path === to.fullPath) {
+                if (!authorityIds.includes(subMenu.authId)) {
+                  this.$router.push('/authority-miss');
+                  return;
+                }
+                flag = true;
+                break;
+              }
+            }
+
+            if (flag) break;
+          }
+        }
+
+        // 保存当前路径
         sessionStorage.currentPath = to.fullPath;
 
         // 刷新页面或网页后退前进时，使UI可以定位到正确的MenuItem上

@@ -21,6 +21,7 @@
       :pageNum="pageNum"
       :pageSize="pageSize"
       :total="total"
+      :showExport="false"
       @handleSelectAll="handleSelectAll"
       @exportData="exportData"
       @deleteSelected="deleteSelected"

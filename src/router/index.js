@@ -32,6 +32,7 @@ const AccountOperation = () => import('components/account-management/account-ope
 const AuthorityManagement = () => import('components/authority-management/authority-management');
 const AuthorityOperation = () => import('components/authority-management/authority-operation');
 const OperationLog = () => import('components/operation-log/operation-log');
+const authorityMiss = () => import('components/authority-miss/authority-miss');
 
 export default new Router({
   routes: [
@@ -174,6 +175,10 @@ export default new Router({
     {
       path: '/operation-log',
       component: OperationLog,
+    },
+    {
+      path: '/authority-miss',
+      component: authorityMiss,
     },
   ],
 });

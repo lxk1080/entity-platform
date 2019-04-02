@@ -13,6 +13,7 @@ import {
   Table,
   Page,
   Message,
+  Modal,
   Avatar,
   Divider,
   Tag,
@@ -75,3 +76,4 @@ Vue.prototype.$IVIEW = {
 };
 
 Vue.prototype.$Message = Message;
+Vue.prototype.$Modal = Modal;

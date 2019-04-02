@@ -59,7 +59,6 @@
     { id: 1, name: '账户名' },
     { id: 2, name: '姓名' },
     { id: 3, name: '公司名称' },
-    { id: 4, name: '套餐' },
   ];
 
   const columns = [

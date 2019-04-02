@@ -102,11 +102,23 @@ export const tableMixin = {
     },
 
     deleteSingle(idValue) {
-      this.apis.deleteSingleData({ [this.idName]: idValue }).then(this.errorCallback);
+      this.$Modal.confirm({
+        title: '删除',
+        content: '确认删除吗？',
+        onOk: () => {
+          this.apis.deleteSingleData({ [this.idName]: idValue }).then(this.errorCallback);
+        },
+      });
     },
 
     deleteSelected() {
-      this.apis.deleteMulData(this.selectedRowIds, 'id').then(this.errorCallback);
+      this.$Modal.confirm({
+        title: '删除选中',
+        content: '确认删除选中项吗？',
+        onOk: () => {
+          this.apis.deleteMulData(this.selectedRowIds, 'id').then(this.errorCallback);
+        },
+      });
     },
 
     onSortBlur(id, sortIndex) {

@@ -11,6 +11,7 @@
       :pageNum="pageNum"
       :pageSize="pageSize"
       :total="total"
+      :showDelete="false"
       @handleSelectAll="handleSelectAll"
       @exportData="exportData"
       @deleteSelected="deleteSelected"
@@ -33,7 +34,7 @@
     },
     {
       title: '操作用户',
-      key: 'adminId',
+      key: 'adminName',
     },
     {
       title: '操作内容',
@@ -42,14 +43,16 @@
     {
       title: '操作时间',
       key: 'createdDate',
-      render: (h, params) => h('span', formatDate(new Date(params.row.createdDate), 'yyyy-MM-dd')),
+      render: (h, params) => h('span', formatDate(new Date(params.row.createdDate), 'yyyy-MM-dd hh:mm')),
     },
+    /*
     {
       title: '操作',
       width: 200,
       align: 'center',
       slot: 'operation',
     },
+    */
   ];
 
   export default {

@@ -22,7 +22,7 @@
       :pageSize="pageSize"
       :total="total"
       :showExport="false"
-      :showDelate="false"
+      :showDelete="false"
       @handleSelectAll="handleSelectAll"
       @exportData="exportData"
       @deleteSelected="deleteSelected"

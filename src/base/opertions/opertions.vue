@@ -4,7 +4,7 @@
       <Button @click="handleSelectAll(true)">设置全选</Button>
       <Button @click="handleSelectAll(false)">取消全选</Button>
       <Button v-if="showExport" @click="exportData('data')" >导出</Button>
-      <Button v-if="showDelate" @click="deleteSelected">删除</Button>
+      <Button v-if="showDelete" @click="deleteSelected">删除</Button>
       <Button v-if="showActiveBtn" @click="onActiveClick(true)">锁定</Button>
       <Button v-if="showActiveBtn" @click="onActiveClick(false)">解锁</Button>
     </div>
@@ -43,7 +43,7 @@
         type: Boolean,
         default: true,
       },
-      showDelate: {
+      showDelete: {
         type: Boolean,
         default: true,
       },
