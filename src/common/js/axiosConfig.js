@@ -2,7 +2,7 @@ import { axiosInstance } from 'api/common';
 import $store from '../../store';
 import { SET_USER } from '../../store/mutation-types';
 
-const loginCode = '99999';
+const loginCode = '1009';
 
 // 拦截请求
 axiosInstance.interceptors.request.use((req) => {
