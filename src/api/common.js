@@ -51,7 +51,7 @@ const getHeaders = function(contentType = 'application/json', cacheControl = 'no
   return headers;
 };
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: url,
   timeout: 10000,
   withCredentials: true,

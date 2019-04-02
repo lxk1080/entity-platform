@@ -6,6 +6,7 @@ import store from './store';
 import fastclick from 'fastclick';
 import 'common/js/iviewConfig';
 import 'common/stylus/index.styl';
+import 'common/js/axiosConfig';
 
 Vue.config.productionTip = false;
 

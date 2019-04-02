@@ -63,7 +63,7 @@
     background-size cover
     overflow hidden
     &-logo
-      margin-top 150px
+      margin-top 100px
       text-align center
     &-con
       position absolute
