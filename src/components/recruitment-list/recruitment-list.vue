@@ -12,10 +12,10 @@
           <Option v-for="(item, i) in searchTypeList" :value="item.id" :key="i">{{ item.name }}</Option>
         </Select>
         <!--搜索框-->
-        <Input v-show="!speicalSearchTypes.includes(searchType)" v-model="keyWords" placeholder="Enter something..." style="width: 200px" />
+        <Input v-show="search_1.includes(searchType)" v-model="keyWords" placeholder="Enter something..." style="width: 200px" />
         <!--日期选择-->
         <DatePicker
-          v-if="speicalSearchTypes.includes(searchType)"
+          v-if="search_2.includes(searchType)"
           :value="getDate(keyWords)"
           type="daterange"
           format="yyyy-MM-dd"
@@ -24,6 +24,9 @@
           style="width: 200px"
           @on-change="(format) => onDateRangeChange(format, 'keyWords')"
         />
+        <Select v-if="search_3.includes(searchType)" v-model="keyWords" style="width: 100px" @on-change="onSearch3Change">
+          <Option v-for="(item, i) in recruitStatusList" :value="item.id" :key="i">{{ item.name }}</Option>
+        </Select>
       </div>
       <div class="header-right">
         <Button type="primary" @click="search">立即检索</Button>
@@ -118,7 +121,10 @@
       recruitType: 0,
       searchTypeList,
       searchType: searchTypeList[0].id,
-      speicalSearchTypes: [3, 4], // 筛选类型为 招聘周期 和 发布时间
+      search_1: [1, 2], // 筛选类型为 发布人 和 岗位标题
+      search_2: [3, 4], // 筛选类型为 招聘周期 和 发布时间
+      search_3: [5], // 筛选类型为 状态
+      recruitStatusList,
       columns,
     }),
 
@@ -152,6 +158,10 @@
         const { operationId } = recruitStatusList.find(item => item.id === row.recruitStatus);
         this.apis.toggleStatus({ recruitStatus: operationId, [this.idName]: row[this.idName] }).then(this.callback);
       },
+
+      onSearch3Change() {
+        this.getData();
+      },
     },
 
     watch: {
@@ -160,13 +170,17 @@
       },
 
       searchType(newValue, oldValue) {
-        if (!this.speicalSearchTypes) return;
-
-        if (!this.speicalSearchTypes.includes(newValue) && this.speicalSearchTypes.includes(oldValue)) {
-          this.keyWords = '';
+        let oldSearch = '';
+        if (this.search_1.includes(oldValue)) {
+          oldSearch = this.search_1;
         }
-
-        if (this.speicalSearchTypes.includes(newValue) && !this.speicalSearchTypes.includes(oldValue)) {
+        if (this.search_2.includes(oldValue)) {
+          oldSearch = this.search_2;
+        }
+        if (this.search_3.includes(oldValue)) {
+          oldSearch = this.search_3;
+        }
+        if (!oldSearch.includes(newValue)) {
           this.keyWords = '';
         }
       },
