@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import LoginApis from 'api/LoginApis';
+  import LoginApis from 'api/loginApis';
   import LoginForm from 'base/login-form';
   import { ERR_OK } from 'api/common';
   import { mapMutations } from 'vuex';

@@ -38,7 +38,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import LoginApis from 'api/LoginApis';
+  import LoginApis from 'api/loginApis';
   import menus from 'common/js/menus';
   import { mapGetters, mapMutations } from 'vuex';
   import { ERR_OK } from 'api/common';
