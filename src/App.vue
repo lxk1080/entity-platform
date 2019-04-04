@@ -169,6 +169,11 @@
 
         // 判断是否有权限
         if (to.fullPath !== '/authority-miss') {
+          if (!JSON.parse(sessionStorage.user).authorityIds) {
+            this.$router.push('/authority-miss');
+            return;
+          }
+
           const authorityIds = JSON.parse(sessionStorage.user).authorityIds.split(',').map(v => parseInt(v));
           let flag = false;
 

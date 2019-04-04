@@ -5,7 +5,7 @@ import Cookie from 'js-cookie';
 // export const url = 'https://ningbo.hanchengvip.com/essence-server';
 // export const url = 'http://192.168.1.102:8080/essence-server';
 // export const url = 'http://192.168.1.107:8080/essence-server';
-export const url = 'http://at42ad.natappfree.cc/essence-server';
+export const url = 'http://cf5npz.natappfree.cc/essence-server';
 
 export const ERR_OK = '0';
 
