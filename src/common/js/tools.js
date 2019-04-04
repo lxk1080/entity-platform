@@ -35,3 +35,19 @@ export const off = (function () {
     };
   }
 })();
+
+/**
+ * @description 自定义事件
+ * @param eventName
+ * @param data
+ * @param target
+ */
+export const fireEvent = function(eventName, data, target = document.body) {
+  const event = new CustomEvent(eventName, {
+    detail: data,
+    bubbles: true,
+    cancelable: false,
+  });
+
+  target.dispatchEvent(event);
+};

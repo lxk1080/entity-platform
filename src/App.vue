@@ -57,6 +57,7 @@
         activeName: '1-1',
         openName: ['1'],
         dropdowns,
+        showModel: true,
       };
     },
 
@@ -67,6 +68,7 @@
     },
 
     mounted() {
+      // 刷新时重新获取用户信息并自动到指定页面
       if (sessionStorage.user) {
         this.setUser(JSON.parse(sessionStorage.user));
 
@@ -76,6 +78,22 @@
           this.$router.push('/enterprise-list');
         }
       }
+
+      // 处理登录已过期
+      document.addEventListener('toLogin', () => {
+        const self = this;
+        self.$Modal.warning({
+          title: '登录已过期',
+          content: '您的登录已过期，请重新登录！',
+          onOk() {
+            if (sessionStorage.user) {
+              sessionStorage.removeItem('user');
+            }
+            self.setUser({});
+            self.$router.push('/login');
+          },
+        });
+      });
     },
 
     methods: {
@@ -136,13 +154,13 @@
     watch: {
       $route(to, from) {
         // 这里判断是否登录
-        if (!sessionStorage.user) {
+        if (!sessionStorage.user || !JSON.parse(sessionStorage.user)) {
           this.$router.push('/login');
           return;
         }
 
         // 如果登录了，但是强行走登录的路由，直接返回之前的路由
-        if (sessionStorage.user && (to.fullPath === '/login' || to.fullPath === '/')) {
+        if (to.fullPath === '/login' || to.fullPath === '/') {
           this.$router.push(from);
           return;
         }
