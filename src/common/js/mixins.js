@@ -223,8 +223,10 @@ export const detailMixin = {
     },
 
     async onAdd() {
-      await this.apis.addData(this.data).then(this.callback);
-      this.onReturn();
+      const res = await this.apis.addData(this.data).then(this.callback);
+      if (res) {
+        this.onReturn();
+      }
     },
 
     async onUpdate() {
@@ -235,10 +237,11 @@ export const detailMixin = {
     callback(res) {
       if (res.code !== ERR_OK) {
         this.$Message.error(res.message);
-        return;
+        return false;
       }
 
       this.$Message.success(res.message);
+      return true;
     },
   },
 };

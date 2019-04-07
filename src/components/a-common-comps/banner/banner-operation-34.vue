@@ -199,7 +199,10 @@
   .banner-operation-34
     layout-absolute()
     card-style()
+    .row-item
+      margin-right 0
     .editor
-      display inline-block
+      margin-top 20px
+      margin-left 25px
       vertical-align text-top
 </style>

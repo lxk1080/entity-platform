@@ -2,7 +2,7 @@
   <div class="news-list">
     <div class="header">
       <div class="header-left">
-        <Button @click="entryPage('news-operation', 0, { type: operations.add.id } )">新增文章</Button>
+        <Button @click="entryPage('news-operation', 0, { type: operations.add.id } )">新增新闻</Button>
         <span style="margin-left: 20px">选择筛选条件：</span>
         <Select v-model="searchType" style="width: 100px">
           <Option v-for="(item, i) in searchTypeList" :value="item.id" :key="i">{{ item.name }}</Option>

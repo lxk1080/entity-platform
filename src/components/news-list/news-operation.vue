@@ -14,6 +14,24 @@
         </div>
         <div class="content-row">
           <div class="row-item">
+            <span>　　作者：</span>
+            <Input v-model="data.author" placeholder="Enter something..." style="width: 600px" />
+          </div>
+        </div>
+        <div class="content-row">
+          <div class="row-item">
+            <span>　　来源：</span>
+            <Input v-model="data.source" placeholder="Enter something..." style="width: 600px" />
+          </div>
+        </div>
+        <div class="content-row">
+          <div class="row-item">
+            <span>　　简介：</span>
+            <Input type="textarea" v-model="data.synopsis" placeholder="140字以内..." style="width: 600px" :maxlength="140" />
+          </div>
+        </div>
+        <div class="content-row">
+          <div class="row-item">
             <span>是否发布：</span>
             <Switchs v-model="data.releaseStatus" :trueValue="1" :falseValue="2" />
           </div>
@@ -30,6 +48,21 @@
             <Select v-model="data.newsType" style="width: 100px">
               <Option v-for="(item, i) in newList" :value="item.id" :key="i">{{ item.name }}</Option>
             </Select>
+          </div>
+        </div>
+        <div class="content-row">
+          <div class="row-item">
+            <span>　　上传封面：</span>
+            <Avatar v-if="operstionType.id === operations.edit.id" class="avatar" size="large" shape="square" :src="imgSrc" />
+            <Upload
+              :before-upload="onBeforeUpload"
+              action=""
+              style="display: inline-block"
+              :format="['jpg','jpeg','png']"
+            >
+              <Button>{{ operstionType.imgTitle }}</Button>
+              <span>{{ getFileName }}</span>
+            </Upload>
           </div>
         </div>
         <div class="content-row">
@@ -70,18 +103,46 @@
         operstionType: operations.add,
         apis: NewsListApis,
         idName: 'newsId',
+        imgSrc: '',
         data: {
           newsTitle: '',
+          author: '',
+          source: '',
+          synopsis: '',
           releaseStatus: 2,
           sortIndex: '',
           newsType: newList[0].id,
           newsContent: '',
+          imageUrl: '',
         },
       };
     },
 
     created() {
       this.operstionType = Object.values(operations).find(item => item.id === parseInt(this.$route.query.type));
+    },
+
+    computed: {
+      getFileName() {
+        if (typeof this.data.imageUrl === 'object') {
+          return this.data.imageUrl.name;
+        }
+
+        return '';
+      },
+    },
+
+    methods: {
+      onBeforeUpload(file) {
+        this.data.imageUrl = file;
+        return false;
+      },
+    },
+
+    watch: {
+      data(newValue) {
+        this.imgSrc = newValue.imageUrl;
+      },
     },
 
     components: {
@@ -96,7 +157,10 @@
   .news-operation
     layout-absolute()
     card-style()
-    .editor
-      display inline-block
-      vertical-align text-top
+    .row-item
+      margin-right 0
+      .editor
+        margin-top 20px
+        margin-left 25px
+        vertical-align text-top
 </style>
