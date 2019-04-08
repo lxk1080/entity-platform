@@ -94,6 +94,7 @@ const menus = [
         title: '活动列表',
         key: '5-1',
         path: '/activity-list',
+        children: ['/activity-operation', '/enroll-list'],
         authId: 17,
       },
     ],

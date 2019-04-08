@@ -23,6 +23,8 @@ const HomeMOperation = () => import('components/home-m-banner/home-m-operation')
 const HomeBBanner = () => import('components/home-b-banner/home-b-banner');
 const HomeBOperation = () => import('components/home-b-banner/home-b-operation');
 const ActivityList = () => import('components/activity-list/activity-list');
+const ActivityOperation = () => import('components/activity-list/activity-operation');
+const enrollList = () => import('components/activity-list/enroll-list');
 const OrderList = () => import('components/order-list/order-list');
 const PackageManagement = () => import('components/package-management/package-management');
 const InvoiceManagement = () => import('components/invoice-management/invoice-management');
@@ -135,6 +137,16 @@ export default new Router({
     {
       path: '/activity-list',
       component: ActivityList,
+      children: [
+        {
+          path: '/activity-operation/:id',
+          component: ActivityOperation,
+        },
+        {
+          path: '/enroll-list/:id',
+          component: enrollList,
+        },
+      ],
     },
     {
       path: '/order-list',
