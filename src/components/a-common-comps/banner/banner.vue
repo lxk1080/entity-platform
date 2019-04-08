@@ -9,7 +9,7 @@
           <Avatar class="avatar" shape="square" size="large" :src="row.imageUrl || 'https://i.loli.net/2017/08/21/599a521472424.jpg'" />
         </template>
         <template slot-scope="{ row }" slot="sort">
-          <Input class="list-input" v-model="row.sortIndex" style="width: 50px" />
+          <Input class="list-input" v-model="row.sortIndex" style="width: 50px" @on-blur="updateSort(row[idName], row.sortIndex)" />
         </template>
         <template slot-scope="{ row }" slot="operation">
           <Button size="small" style="margin-right: 5px" @click="entryPage(banner.operationPath, row[idName], { type: operations.edit.id })">编辑</Button>
@@ -161,6 +161,10 @@
         ]);
 
         this.getDataByCommFunc(data);
+      },
+
+      updateSort(id, sortIndex) {
+        this.apis.updateSort({ [this.idName]: id, sortIndex }).then(this.errorCallback);
       },
     },
   };

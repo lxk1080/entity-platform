@@ -66,8 +66,8 @@
 
   const inforCardData = [
     { title: '总企业数量', icon: 'ios-heart', count: 0, color: colors.info, key: 'enterprisTotal' },
-    { title: '总招聘岗位数量', icon: 'md-build', count: 0, color: colors.success, key: 'recruitTotal' },
-    { title: '总投递简历数量', icon: 'md-clipboard', count: 0, color: colors.warn, key: 'positionTotal' },
+    { title: '总招聘岗位数量', icon: 'md-build', count: 0, color: colors.success, key: 'positionTotal' },
+    { title: '总投递简历数量', icon: 'md-clipboard', count: 0, color: colors.warn, key: 'recruitTotal' },
     { title: '总小程序用户数量', icon: 'md-person', count: 0, color: colors.error, key: 'userTotal' },
     { title: '今日新增企业数量', icon: 'md-add-circle', count: 0, color: colors.info, key: 'todayEnterprisNum' },
     { title: '今日发布岗位数量', icon: 'md-add-circle', count: 0, color: colors.success, key: 'todayrecruitNum' },

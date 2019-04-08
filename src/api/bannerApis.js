@@ -33,6 +33,12 @@ const BannerApis = {
   updateData: data => postFile('/banner/modifyBanner.do', '', data),
 
   /**
+   * 排序
+   * @param data
+   */
+  updateSort: data => post('/banner/modifyBannerSortIndex.do', '', data),
+
+  /**
    * 获取详情页数据
    * @param data => bannerId
    */

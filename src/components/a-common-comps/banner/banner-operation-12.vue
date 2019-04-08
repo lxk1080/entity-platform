@@ -30,7 +30,7 @@
         <div class="content-row">
           <div class="row-item">
             <span>　　　　排序：</span>
-            <Input v-model="data.sortIndex" placeholder="Enter something..." style="width: 200px" />
+            <Input v-model="data.sortIndex" placeholder="Enter something..." style="width: 200px" @on-blur="onSortBlur(row[idName], row.sortIndex)" />
           </div>
         </div>
         <div class="content-row" v-if="banner.id === banners.applets.id">
