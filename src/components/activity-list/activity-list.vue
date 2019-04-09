@@ -126,6 +126,7 @@
       idName: 'activityId',
       operations,
       searchTypeList,
+      activateds,
       searchType: searchTypeList[0].id,
       columns,
     }),
