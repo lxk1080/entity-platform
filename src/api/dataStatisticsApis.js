@@ -7,7 +7,23 @@ const DataStatisticsApis = {
    */
   getStatisticData: data => post('/platform/platformCount.do', '', data),
 
-  updateData: data => post('/platform/countPositionList.do', '', data),
+  /**
+   * 获取岗位发布统计
+   * @param data
+   */
+  updateDataForPosition: data => post('/platform/countPositionList.do', '', data),
+
+  /**
+   * 获取套餐列表
+   * @param data
+   */
+  getMealList: data => post('/combinedMeal/getCombinedMealList.do', '', data),
+
+  /**
+   * 获取订单统计
+   * @param data
+   */
+  updateDataForOrder: data => post('/platform/countOrderList.do', '', data),
 };
 
 export default DataStatisticsApis;

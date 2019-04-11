@@ -11,10 +11,10 @@
     <Row :gutter="20" style="margin-top: 10px;">
       <i-col :md="24" :lg="24" style="margin-bottom: 20px">
         <Card shadow>
-          <RadioGroup v-model="dateType" @on-change="onDateChange">
+          <RadioGroup v-model="dateTypeForPosition" @on-change="onSearchTypeChangeForPosition">
             <Radio v-for="(item, index) in dateTypes" :label="item.id" :key="index">{{ item.name }}</Radio>
           </RadioGroup>
-          <Select v-model="recruitType" style="width: 200px" @on-change="onDateChange">
+          <Select v-model="recruitType" style="width: 200px" @on-change="onSearchTypeChangeForPosition">
             <Option v-for="(item, index) in recruitTypeList" :value="item.id" :key="index">{{ item.name }}</Option>
           </Select>
           <div ref="postDom" style="height: 400px" />
@@ -24,14 +24,11 @@
     <Row :gutter="20" style="margin-top: 10px;">
       <i-col :md="24" :lg="24" style="margin-bottom: 20px">
         <Card shadow>
-          <RadioGroup @on-change="() => {}">
-            <Radio label="1">{{ '本周' }}</Radio>
-            <Radio label="2">{{ '月份' }}</Radio>
-            <Radio label="3">{{ '年份' }}</Radio>
+          <RadioGroup v-model="dateTypeForOrder" @on-change="onSearchTypeChangeForOrder">
+            <Radio v-for="(item, index) in dateTypes" :label="item.id" :key="index">{{ item.name }}</Radio>
           </RadioGroup>
-          <Select value="1" style="width: 200px">
-            <Option value="1">{{ '全部类型' }}</Option>
-            <Option value="2">{{ '家庭教育' }}</Option>
+          <Select v-model="meal" style="width: 200px" @on-change="onSearchTypeChangeForOrder">
+            <Option v-for="(item, index) in mealList" :value="item.combinedMealId" :key="index">{{ item.mealName }}</Option>
           </Select>
           <div ref="orderDom" style="height: 400px" />
         </Card>
@@ -90,9 +87,12 @@
       return {
         apis: DataStatisticsApis,
         dateTypes,
-        dateType: dateTypes[0].id,
+        dateTypeForPosition: dateTypes[0].id,
+        dateTypeForOrder: dateTypes[0].id,
         recruitTypeList,
         recruitType: recruitTypeList[0].id,
+        mealList: [],
+        meal: 0,
         inforCardData,
         barData,
         postDom: null,
@@ -101,11 +101,26 @@
     },
 
     created() {
+      // 获取8个统计数据
       this.apis.getStatisticData().then(res => {
         if (res.code === ERR_OK) {
           for (let [key, value] of Object.entries(res.result)) {
             this.inforCardData.find(v => v.key === key).count = value;
           }
+          return;
+        }
+        this.$Message.error(res.message);
+      });
+
+      // 获取套餐列表
+      this.apis.getMealList({ pageNum: 1, pageSize: 100 }).then(res => {
+        if (res.code === ERR_OK) {
+          this.mealList = res.result;
+          this.mealList.unshift({
+            combinedMealId: 0,
+            mealName: '全部类型',
+          });
+          this.meal = this.mealList[0].combinedMealId;
           return;
         }
         this.$Message.error(res.message);
@@ -121,13 +136,17 @@
     },
 
     methods: {
-      onDateChange() {
+      onSearchTypeChangeForPosition() {
         this.initPostCharts();
       },
 
+      onSearchTypeChangeForOrder() {
+        this.initOrderCharts();
+      },
+
       initPostCharts() {
-        this.apis.updateData({
-          dateType: this.dateType,
+        this.apis.updateDataForPosition({
+          dateType: this.dateTypeForPosition,
           recruitType: this.recruitType,
         }).then(res => {
           const data = {};
@@ -162,35 +181,44 @@
       },
 
       initOrderCharts() {
-        const xAxisData = Object.keys(this.barData);
-        const seriesData = Object.values(this.barData);
-        const option = {
-          color: colors.success,
-          title: {
-            text: '订单统计',
-            x: 'center',
-          },
-          xAxis: {
-            type: 'category',
-            data: xAxisData,
-          },
-          yAxis: {
-            type: 'value',
-          },
-          series: [
-            {
-              name: 'day',
-              data: seriesData,
-              type: 'bar',
+        this.apis.updateDataForOrder({
+          dateType: this.dateTypeForOrder,
+          mealId: this.meal,
+        }).then(res => {
+          const data = {};
+          res.result.map(item => {
+            data[item.weekDate] = item.number;
+          });
+          const xAxisData = Object.keys(data);
+          const seriesData = Object.values(data);
+          const option = {
+            title: {
+              text: '订单统计',
+              x: 'center',
             },
-          ],
-        };
-        this.orderDom = echarts.init(this.$refs.orderDom, 'tdTheme');
-        this.orderDom.setOption(option);
+            xAxis: {
+              type: 'category',
+              data: xAxisData,
+            },
+            yAxis: {
+              type: 'value',
+            },
+            series: [
+              {
+                name: 'day',
+                data: seriesData,
+                type: 'bar',
+              },
+            ],
+          };
+          this.orderDom = echarts.init(this.$refs.orderDom, 'tdTheme');
+          this.orderDom.setOption(option);
+        });
       },
 
       resize () {
         this.postDom.resize();
+        this.orderDom.resize();
       },
     },
 
