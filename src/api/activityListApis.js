@@ -36,13 +36,18 @@ const ActivityListApis = {
    * @param activityUrl   活动连接
    * @param activated     是否显示：1显示，2不显示
    */
-  update: data => post('/activity/modifyActivity.do', '', data),
+  updateData: data => post('/activity/modifyActivity.do', '', data),
 
   /**
    * 获取详情页数据
    * @param data => activityId
    */
   getDetailData: data => post('/activity/getActivityById.do', '', data),
+
+  /**
+   * 获取报名列表
+   */
+  getEnrollList: data => post('/activityEnroll/getActivityEnrollList.do', '', data),
 };
 
 export default ActivityListApis;

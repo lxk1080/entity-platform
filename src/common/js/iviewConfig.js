@@ -33,6 +33,8 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownItem,
+  CheckboxGroup,
+  Checkbox,
 } from 'iview';
 
 import 'iview/dist/styles/iview.css';
@@ -69,6 +71,8 @@ Vue.component('Tree', Tree);
 Vue.component('Dropdown', Dropdown);
 Vue.component('DropdownMenu', DropdownMenu);
 Vue.component('DropdownItem', DropdownItem);
+Vue.component('CheckboxGroup', CheckboxGroup);
+Vue.component('Checkbox', Checkbox);
 
 // 由于使用的按需加载的方式，只能加载组件，导致很多初始化在iview入口中的操作并没有做，所以需要自己手动完成
 Vue.prototype.$IVIEW = {
