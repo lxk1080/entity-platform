@@ -4,36 +4,36 @@ const InvoiceManagementApis = {
   /**
    * 获取发票列表
    */
-  getList: data => post('/invoice/getInvoiceList.do', '', data),
+  getList: data => post('/orderInvoice/getOrderInvoiceList.do', '', data),
 
   /**
    * 删除单条数据
    * @param data => invoiceId
    */
-  deleteSingleData: data => post('/invoice/deleteInvoice.do', '', data),
+  deleteSingleData: data => post('/orderInvoice/deleteOrderInvoice.do', '', data),
 
   /**
    * 删除多条数据
    * @param data => type: array or object
    * @param sameKey => when data is array => id
    */
-  deleteMulData: (data, sameKey) => postStream('/invoice/deleteInvoiceBatch.do', '', data, sameKey),
+  deleteMulData: (data, sameKey) => postStream('/orderInvoice/deleteOrderInvoiceBatch.do', '', data, sameKey),
 
   /**
    * 添加发票
    */
-  addData: data => post('/invoice/addInvoice.do', '', data),
+  addData: data => post('/orderInvoice/addOrderInvoice.do', '', data),
 
   /**
    * 修改发票
    */
-  update: data => post('/invoice/modifyInvoice.do', '', data),
+  updateData: data => post('/orderInvoice/modifyOrderInvoice.do', '', data),
 
   /**
    * 获取详情页数据
    * @param data => invoiceId
    */
-  getDetailData: data => post('/invoice/getInvoiceById.do', '', data),
+  getDetailData: data => post('/orderInvoice/getOrderInvoiceById.do', '', data),
 };
 
 export default InvoiceManagementApis;

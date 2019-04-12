@@ -27,7 +27,7 @@ const PackageManagementApis = {
   /**
    * 修改套餐
    */
-  update: data => post('/combinedMeal/modifyCombinedMeal.do', '', data),
+  updateData: data => post('/combinedMeal/modifyCombinedMeal.do', '', data),
 
   /**
    * 获取详情页数据

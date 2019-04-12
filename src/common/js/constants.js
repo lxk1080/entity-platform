@@ -145,3 +145,9 @@ export const showTypes = [
   { id: 1, name: '长期展示' },
   { id: 2, name: '设定时间' },
 ];
+
+export const invoiceStatusType = [
+  { id: 1, name: '申请中', color: colors.purple },
+  { id: 2, name: '快递中', color: colors.info },
+  { id: 3, name: '已完成', color: colors.success },
+];

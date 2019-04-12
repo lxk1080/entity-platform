@@ -27,13 +27,16 @@ const ActivityOperation = () => import('components/activity-list/activity-operat
 const enrollList = () => import('components/activity-list/enroll-list');
 const OrderList = () => import('components/order-list/order-list');
 const PackageManagement = () => import('components/package-management/package-management');
+const PackageOperation = () => import('components/package-management/package-operation');
 const InvoiceManagement = () => import('components/invoice-management/invoice-management');
+const InvoiceDetail = () => import('components/invoice-management/invoice-detail');
 const DataStatistics = () => import('components/data-statistics/data-statistics');
 const AccountManagement = () => import('components/account-management/account-management');
 const AccountOperation = () => import('components/account-management/account-operation');
 const AuthorityManagement = () => import('components/authority-management/authority-management');
 const AuthorityOperation = () => import('components/authority-management/authority-operation');
 const OperationLog = () => import('components/operation-log/operation-log');
+const SystemSetting = () => import('components/system-setting/system-setting');
 const authorityMiss = () => import('components/authority-miss/authority-miss');
 
 export default new Router({
@@ -155,10 +158,22 @@ export default new Router({
     {
       path: '/package-management',
       component: PackageManagement,
+      children: [
+        {
+          path: '/package-operation/:id',
+          component: PackageOperation,
+        },
+      ],
     },
     {
       path: '/invoice-management',
       component: InvoiceManagement,
+      children: [
+        {
+          path: '/invoice-detail/:id',
+          component: InvoiceDetail,
+        },
+      ],
     },
     {
       path: '/data-statistics',
@@ -187,6 +202,10 @@ export default new Router({
     {
       path: '/operation-log',
       component: OperationLog,
+    },
+    {
+      path: '/system-setting',
+      component: SystemSetting,
     },
     {
       path: '/authority-miss',
