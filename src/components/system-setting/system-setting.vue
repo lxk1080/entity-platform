@@ -8,30 +8,36 @@
       <div class="card-content">
         <div class="content-row">
           <div class="row-item">
-            <span>　　注册奖励报名单数：</span>
-            <span v-show="!edit">{{ data.registerAward }}</span>
-            <Input v-show="edit" v-model="data.registerAward" style="width: 600px" />
+            <div class="title">　　注册奖励报名单数：</div>
+            <div class="text">
+              <div v-show="!edit">{{ data.registerAward }}</div>
+              <Input v-show="edit" v-model="data.registerAward" style="width: 600px" />
+            </div>
           </div>
         </div>
         <div class="content-row">
           <div class="row-item">
-            <span>实名认证奖励报名单数：</span>
-            <span v-show="!edit">{{ data.authenticationAward }}</span>
-            <Input v-show="edit" v-model="data.authenticationAward" style="width: 600px" />
+            <div class="title">实名认证奖励报名单数：</div>
+            <div class="text">
+              <div v-show="!edit">{{ data.authenticationAward }}</div>
+              <Input v-show="edit" v-model="data.authenticationAward" style="width: 600px" />
+            </div>
           </div>
         </div>
         <div class="content-row">
           <div class="row-item">
-            <span>　　　　　　用户协议：</span>
-            <span v-show="!edit">{{ data.userAgreement }}</span>
-            <Input
-              v-show="edit"
-              class="textarea"
-              type="textarea"
-              v-model="data.userAgreement"
-              :autosize="autosize"
-              style="width: 600px"
-            />
+            <div class="title">　　　　　　用户协议：</div>
+            <div class="text">
+              <div v-show="!edit">{{ data.userAgreement }}</div>
+              <Input
+                v-show="edit"
+                class="textarea"
+                type="textarea"
+                v-model="data.userAgreement"
+                :autosize="autosize"
+                style="width: 600px"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -57,8 +63,7 @@
           authenticationAward: '',
         },
         autosize: {
-          minRows: 4,
-          maxRows: 6,
+          minRows: 10,
         },
         edit: false,
       };
@@ -103,12 +108,20 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/mixin";
+  @import "~common/stylus/variable";
 
   .system-setting
     page-base()
     card-style()
-    .textarea
-      vertical-align text-top
+    .content-row
+      line-height 25px
+      .row-item
+        display flex
+        width 100%
+        .text
+          flex 1
+          .textarea
+            vertical-align text-top
     .footer
       .btn-footer
         width 160px
