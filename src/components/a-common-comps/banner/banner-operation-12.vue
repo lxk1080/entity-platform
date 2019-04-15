@@ -36,7 +36,7 @@
         <div class="content-row" v-if="banner.id === banners.applets.id">
           <div class="row-item">
             <span>是否关联活动：</span>
-            <Switchs v-model="data.isLinkActivity" :trueValue="1" :falseValue="2" @on-change="onLinkSwitchChange" />
+            <Switchs v-model="data.isRelevanceActivity" :trueValue="1" :falseValue="2" @on-change="onLinkSwitchChange" />
             <Select v-model="data.activityId" :disabled="data.isLinkActivity === 2" style="width: 100px; margin-left: 10px">
               <Option v-for="(item, i) in activityList" :value="item.activityId" :key="i">{{ item.activityTitle }}</Option>
             </Select>
@@ -90,7 +90,7 @@
           bannerTitle: '',
           imageUrl: '',
           sortIndex: '',
-          isLinkActivity: 2,
+          isRelevanceActivity: 2,
           activityId: '',
           activated: 2,
         },
