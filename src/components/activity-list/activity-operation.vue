@@ -12,7 +12,7 @@
             <Input v-model="data.activityTitle" placeholder="Enter something..." style="width: 200px" />
           </div>
         </div>
-        <div class="content-row">
+        <!--<div class="content-row">
           <div class="row-item">
             <span>跳转链接：</span>
             <Input v-model="data.activityUrl" placeholder="Enter something..." style="width: 200px" />
@@ -23,7 +23,7 @@
             <span>　　排序：</span>
             <Input v-model="data.sortIndex" placeholder="Enter something..." style="width: 200px" />
           </div>
-        </div>
+        </div>-->
         <div class="content-row">
           <div class="row-item">
             <span>活动正文：</span>
@@ -84,8 +84,8 @@
         showColumn: [],
         data: {
           activityTitle: '',
-          activityUrl: '',
-          sortIndex: '',
+          // activityUrl: '',
+          // sortIndex: '',
           activityContent: '',
           activated: 2,
           showColumn: '',

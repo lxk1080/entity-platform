@@ -31,9 +31,9 @@
         <template slot-scope="{ row }" slot="enrollList">
           <div class="btn-a" size="small" @click="entryPage('enroll-list', row[idName])">点击查看</div>
         </template>
-        <template slot-scope="{ row }" slot="sort">
+        <!--<template slot-scope="{ row }" slot="sort">
           <Input class="list-input" v-model="row.sortIndex" style="width: 50px" @on-blur="onSortBlur(row[idName], row.sortIndex)" />
-        </template>
+        </template>-->
         <template slot-scope="{ row }" slot="operation">
           <Button size="small" style="margin-right: 5px" @click="entryPage('activity-operation', row[idName], { type: operations.edit.id })">编辑</Button>
           <Button type="error" size="small" @click="deleteSingle(row[idName])">删除</Button>
@@ -104,12 +104,12 @@
       align: 'center',
       slot: 'enrollList',
     },
-    {
+    /*{
       title: '排序',
       key: 'sortIndex',
       align: 'center',
       slot: 'sort',
-    },
+    },*/
     {
       title: '操作',
       width: 200,
