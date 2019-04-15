@@ -104,12 +104,12 @@
       align: 'center',
       slot: 'enrollList',
     },
-    /*{
+    /* {
       title: '排序',
       key: 'sortIndex',
       align: 'center',
       slot: 'sort',
-    },*/
+    }, */
     {
       title: '操作',
       width: 200,
