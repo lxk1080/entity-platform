@@ -59,7 +59,13 @@
         <div class="content-row">
           <div class="row-item">
             <span>　　内容：</span>
-            <vue-editor v-if="data.bannerType === 1" class="editor" v-model="data.content" />
+            <vue-editor
+              v-if="data.bannerType === 1"
+              class="editor"
+              v-model="data.content"
+              useCustomImageHandler
+              @imageAdded="handleImageAdded"
+            />
           </div>
         </div>
         <div class="content-row">

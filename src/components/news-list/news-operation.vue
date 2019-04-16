@@ -68,7 +68,12 @@
         <div class="content-row">
           <div class="row-item">
             <span>　　内容：</span>
-            <vue-editor class="editor" v-model="data.newsContent" />
+            <vue-editor
+              class="editor"
+              v-model="data.newsContent"
+              useCustomImageHandler
+              @imageAdded="handleImageAdded"
+            />
           </div>
         </div>
       </div>

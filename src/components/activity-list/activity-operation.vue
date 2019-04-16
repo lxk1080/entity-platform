@@ -27,7 +27,12 @@
         <div class="content-row">
           <div class="row-item">
             <span>活动正文：</span>
-            <vue-editor class="editor" v-model="data.activityContent" />
+            <vue-editor
+              class="editor"
+              v-model="data.activityContent"
+              useCustomImageHandler
+              @imageAdded="handleImageAdded"
+            />
           </div>
         </div>
         <div class="content-row">

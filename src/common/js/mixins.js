@@ -1,6 +1,7 @@
 // import { mapGetters, mapMutations, mapActions } from 'vuex';
 import Opertions from 'base/opertions/opertions';
 import Qs from 'qs';
+import FileApis from 'api/fileApis';
 import { ERR_OK } from 'api/common';
 import { operations } from 'common/js/constants';
 import { formatDate } from 'common/js/utils';
@@ -242,6 +243,16 @@ export const detailMixin = {
 
       this.$Message.success(res.message);
       return true;
+    },
+
+    handleImageAdded (file, Editor, cursorLocation, resetUploader) {
+      FileApis.uploadImage({ file }).then(res => {
+        if (res.code === ERR_OK) {
+          Editor.insertEmbed(cursorLocation, 'image', res.result);
+          return;
+        }
+        this.$Message.error(res.message);
+      });
     },
   },
 };
