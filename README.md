@@ -1,6 +1,6 @@
 # essence-platform
 
-> essence-platform page （明日箐英）
+> essence-platform page
 
 ## Build Setup
 
